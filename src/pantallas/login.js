@@ -5,6 +5,10 @@ export default function SignUp({ navigation }) {
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
 
+    const irRegistrar = async () => {
+        navigation.navigate('Home')
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Inicio de Secion</Text>
@@ -24,7 +28,7 @@ export default function SignUp({ navigation }) {
                 value={contrasena}
                 onChangeText={setContrasena}
             />
-            <Button title="Registrar" onPress={() => { }} color="#1E90FF" />
+            <Button on title="Registrar" onPress={irRegistrar} color="#1E90FF" />
         </View>
     );
 };
