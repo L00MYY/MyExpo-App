@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-
-export default function SignUp({ navigation }) {
+import { View, Image, Text, TextInput, Button, StyleSheet } from 'react-native';
+import imagenLogo from '../img/logo-ricaldone.png';
+export default function Login({ navigation }) {
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
 
@@ -11,7 +11,9 @@ export default function SignUp({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Inicio de Secion</Text>
+            <View style={styles.conteImg}><Image source={imagenLogo} style={styles.image}/></View>
+<View style={styles.contentView}>
+<Text style={styles.title}>Inicio de Secion</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Correo"
@@ -29,6 +31,7 @@ export default function SignUp({ navigation }) {
                 onChangeText={setContrasena}
             />
             <Button on title="Registrar" onPress={irRegistrar} color="#1E90FF" />
+</View>
         </View>
     );
 };
@@ -39,7 +42,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#121212',
         padding: 20,
         justifyContent: 'center',
+        alignContent: 'center',
     },
+    conteImg: {
+        marginTop:-250,
+        width: 350,  // Ancho deseado de la imagen
+        height: 350, // Alto deseado de la imagen
+        resizeMode: 'contain', // Ajusta el tamaño de la imagen para que encaje dentro de su contenedor
+        justifyContent: 'flex-start', // Alinea los elementos hacia arriba
+        alignItems: 'center', // Centra horizontalmente
+      },
     title: {
         fontSize: 32,
         color: '#fff',
@@ -56,4 +68,10 @@ const styles = StyleSheet.create({
         borderColor: '#333',
         marginBottom: 15,
     },
+    contentView:{
+        position:'absolute',
+        top:'40%',
+        width:'100%',
+        marginHorizontal:20
+    }
 });

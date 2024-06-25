@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DrawerNavigator from './src/DrawerNavigator/DrawerNavigator';
 
 // Importa tus componentes de pantalla aquí
-import Login from './src/pantallas/Login';
-import Registro from './src/pantallas/Registro';
+import Login from './src/pantallas/login';
+import Registro from './src/pantallas/registro';
 import SplashScreen from './src/pantallas/SplashScreen';
 import InicioScreen from './src/pantallas/Home';
 
