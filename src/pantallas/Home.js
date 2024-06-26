@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
@@ -10,6 +11,8 @@ export default function Home({ navigation }) {
           source={require('../img/logo_banner.png')} 
           style={styles.logo}
         />
+
+          
         <Icon name="person-outline" type="material" color="#000" />
       </View>
       <Text style={styles.welcomeText}>¡Bienvenido (nombre)!</Text>

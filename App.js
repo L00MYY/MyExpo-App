@@ -3,13 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Importa tus componentes de pantalla aquí
-import Login from './src/pantallas/login';
+import Login from './src/pantallas/login'
 import Registro from './src/pantallas/registro';
 import SplashScreen from './src/pantallas/SplashScreen';
-import InicioScreen from './src/pantallas/Home';
+import TabNavigator from './src/tabNavigator/tabNavigator';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function App() {
           <>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Registro" component={Registro} />
-            <Stack.Screen name="Home" component={InicioScreen} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </>
         ) : (
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
