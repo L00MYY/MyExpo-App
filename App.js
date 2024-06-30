@@ -7,6 +7,9 @@ import Login from './src/pantallas/login'
 import Registro from './src/pantallas/registro';
 import SplashScreen from './src/pantallas/SplashScreen';
 import TabNavigator from './src/tabNavigator/tabNavigator';
+import Propuesta from './src/pantallas/propuestas'; 
+import Equipo from './src/pantallas/equipos'; 
+
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +39,7 @@ export default function App() {
         }}>
         {appIsReady ? (
           <>
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Login" component={Equipo} />
             <Stack.Screen name="Registro" component={Registro} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </>
