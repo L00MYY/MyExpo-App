@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Switch, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Switch, Button, StyleSheet, ScrollView } from 'react-native';
 
 const DetalleEquipo = () => {
   const [nombre, setNombre] = useState('');
@@ -17,7 +17,7 @@ const DetalleEquipo = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.label}>Nombre:</Text>
       <TextInput style={styles.input} value={nombre} onChangeText={setNombre} />
 
@@ -50,13 +50,14 @@ const DetalleEquipo = () => {
       ))}
 
       <Button title="Añadir" onPress={() => alert('Añadir nuevo integrante')} />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    flexGrow: 1,
   },
   label: {
     fontSize: 16,
