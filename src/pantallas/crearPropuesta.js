@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Importa useNavigation desde react-navigation/native
 
 const CrearPropuesta = () => {
+  const navigation = useNavigation(); // Obtén el objeto de navegación usando useNavigation()
+
   const [nombre, setNombre] = useState('');
   const [objetivos, setObjetivos] = useState('');
   const [justificacion, setJustificacion] = useState('');
@@ -31,7 +34,13 @@ const CrearPropuesta = () => {
       <Text style={styles.label}>Estado:</Text>
       <Switch value={estado} onValueChange={setEstado} />
 
-      <Button title="Añadir" onPress={() => alert('Propuesta añadida')} />
+      <Button
+        title="Añadir"
+        onPress={() => {
+          navigation.navigate('Propuesta');
+          alert('Propuesta añadida');
+        }}
+      />
     </ScrollView>
   );
 };

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
 
 const DetalleEquipo = () => {
+  const navigation = useNavigation(); // Obtiene el objeto de navegación
+
   const [nombre, setNombre] = useState('');
   const [objetivos, setObjetivos] = useState('');
   const [justificacion, setJustificacion] = useState('');
@@ -50,6 +53,13 @@ const DetalleEquipo = () => {
       ))}
 
       <Button title="Añadir" onPress={() => alert('Añadir nuevo integrante')} />
+      <Button
+        title="Guardar equipo"
+        onPress={() => {
+          navigation.navigate('Equipo');
+          alert('Equipo guardado');
+        }}
+      />
     </ScrollView>
   );
 };

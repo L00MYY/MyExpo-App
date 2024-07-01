@@ -12,7 +12,7 @@ const PropuestasScreen = ({navigation}) => {
       <View style={styles.header}>
       </View>
       <Text style={styles.title}>Equipos PTC</Text>
-      <TextInput style={styles.input} placeholder="Tipo:" />
+      <TextInput style={styles.input} placeholder="Curso:" />
       <ScrollView style={styles.scrollView}>
         {propuestas.map((propuesta, index) => (
           <View key={index} style={styles.card}>
