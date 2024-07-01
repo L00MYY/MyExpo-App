@@ -40,14 +40,15 @@ export default function App() {
         }}>
         {appIsReady ? (
           <>
-            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Registro" component={Registro} />
+            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </>
         ) : (
-          <Stack.Screen name="SplashScreen" component={SplashScreen} />
+          <Stack.Screen namse="SplashScreen" component={SplashScreen} />
         )}
       </Stack.Navigator>
+      
     </NavigationContainer>
   );
 }

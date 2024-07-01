@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Text, TextInput, Button, StyleSheet } from 'react-native';
 import imagenLogo from '../img/logo-ricaldone.png';
 
-export default function Login({ ynavigation }) {
+export default function Login({ navigation }) {
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
 
