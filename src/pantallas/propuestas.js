@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const PropuestasScreen = () => {
+  const navigation = useNavigation();
   const propuestas = [
     { nombre: 'Proyecto 1', descripcion: 'Proyecto se basa en realizar....' },
     { nombre: 'Proyecto 2', descripcion: 'Proyecto se basa en realizar....' },
@@ -22,7 +24,7 @@ const PropuestasScreen = () => {
           </View>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.createButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('crearPropuesta')}>
         <Text style={styles.createButtonText}>Crear Propuesta</Text>
       </TouchableOpacity>
     </View>

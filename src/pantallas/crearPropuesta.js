@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const CrearPropuesta = () => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [nombre, setNombre] = useState('');
   const [objetivos, setObjetivos] = useState('');
@@ -48,7 +50,14 @@ const CrearPropuesta = () => {
             <Text style={styles.label}>Estado:</Text>
             <Switch value={estado} onValueChange={setEstado} />
 
-            <Button title="Añadir" onPress={() => alert('Propuesta añadida')} />
+            <Button
+              title="Añadir"
+              onPress={() => {
+                setModalVisible(false); // Cerrar modal al añadir
+                navigation.navigate('Propuesta'); // Navegar a la pantalla de Propuesta
+                alert('Propuesta añadida');
+              }}
+            />
           </View>
         </View>
       </Modal>

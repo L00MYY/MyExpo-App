@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
 
-const PropuestasScreen = () => {
+const PropuestasScreen = ({navigation}) => {
   const propuestas = [
-    { nombre: 'Proyecto 1', descripcion: 'Proyecto se basa en realizar....' },
-    { nombre: 'Proyecto 2', descripcion: 'Proyecto se basa en realizar....' },
+    { nombre: 'Equipo 1', descripcion: 'Equipo se basa en realizar....' },
+    { nombre: 'Equipo 2', descripcion: 'Equipo se basa en realizar....' },
   ];
 
   return (
@@ -24,7 +24,7 @@ const PropuestasScreen = () => {
           </View>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.createButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('DetalleEquipo')}>
         <Text style={styles.createButtonText}>Crear Equipo</Text>
       </TouchableOpacity>
     </View>
