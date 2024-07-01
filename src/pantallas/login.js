@@ -10,7 +10,7 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             <View style={styles.conteImg}><Image source={imagenLogo} style={styles.image} /></View>
             <View style={styles.contentView}>
-                <Text style={styles.title}>Inicio de Secion</Text>
+                <Text style={styles.title}>Inicio de Sesión</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Correo"
@@ -27,8 +27,12 @@ export default function Login({ navigation }) {
                     value={contrasena}
                     onChangeText={setContrasena}
                 />
-                <Button on title="Registrar" onPress={() => navigation.navigate('TabNavigator')}
-                    color="#1E90FF" />
+                <View style={styles.buttonContainer}>
+                    <Button title="Registrar" onPress={() => navigation.navigate('Registro')} color="#1E90FF" />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button title="Login" onPress={() => navigation.navigate('TabNavigator')} color="#1E90FF" />
+                </View>
             </View>
         </View>
     );
@@ -70,6 +74,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '40%',
         width: '100%',
-        marginHorizontal: 20
-    }
+        marginHorizontal: 20,
+    },
+    buttonContainer: {
+        marginBottom: 15, // Agrega un espaciado entre los botones
+    },
 });
+

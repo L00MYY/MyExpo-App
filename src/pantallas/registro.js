@@ -48,7 +48,7 @@ export default function SignUp({ navigation }) {
                 value={contrasena}
                 onChangeText={setContrasena}
             />
-            <Button title="Registrar" onPress={() => { }} color="#1E90FF" />
+            <Button title="Registrar" onPress={() => navigation.navigate('Login')} color="#1E90FF" />
         </View>
     );
 };
