@@ -4,7 +4,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 // Importa tus componentes de pantalla aquí
 import Home from '../pantallas/Home';
-import AnotherScreen from '../pantallas/verificacion'; // Ejemplo de otra pantalla
+import Equipo from '../pantallas/equipos'; 
+import Propuesta from '../pantallas/propuestas';// Ejemplo de otra pantalla
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,9 @@ const TabNavigator = () => {
           let iconName;
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'AnotherScreen') {
+          } else if (route.name === 'Equipo') {
+            iconName = focused ? 'list' : 'list-outline';
+          }else if (route.name === 'Propuesta') {
             iconName = focused ? 'list' : 'list-outline';
           }
           return <Ionicons name={iconName} color={color} size={size} />;
@@ -32,8 +35,12 @@ const TabNavigator = () => {
         component={Home}
       />
       <Tab.Screen
-        name="AnotherScreen"
-        component={AnotherScreen}
+        name="Equipo"
+        component={Equipo}
+      />
+      <Tab.Screen
+        name="Propuesta"
+        component={Propuesta}
       />
     </Tab.Navigator>
   );

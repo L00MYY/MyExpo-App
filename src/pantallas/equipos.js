@@ -10,16 +10,6 @@ const PropuestasScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => { /* Acción para regresar */ }}>
-          <Text style={styles.backButton}>{'<'}</Text>
-        </TouchableOpacity>
-        <Image
-          source={{ uri: 'https://www.example.com/logo.png' }} // Coloca la URL de tu logo aquí
-          style={styles.logo}
-        />
-        <TouchableOpacity onPress={() => { /* Acción para el perfil */ }}>
-          <Text style={styles.profileIcon}>👤</Text>
-        </TouchableOpacity>
       </View>
       <Text style={styles.title}>Equipos PTC</Text>
       <TextInput style={styles.input} placeholder="Tipo:" />
