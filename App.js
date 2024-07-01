@@ -39,13 +39,13 @@ export default function App() {
           headerShown: false
         }}>
         {appIsReady ? (
-          <>
-            <Stack.Screen name="Registro" component={Registro} />
+          <>            
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Registro" component={Registro} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </>
         ) : (
-          <Stack.Screen namse="SplashScreen" component={SplashScreen} />
+          <Stack.Screen name="SplashScreen" component={SplashScreen} />
         )}
       </Stack.Navigator>
       
