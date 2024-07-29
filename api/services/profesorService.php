@@ -11,7 +11,7 @@ if (isset($_GET['action'])) {
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'session' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'username' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
-    if (isset($_SESSION['idAdministrador'])) {
+    if (isset($_SESSION['idProfesor'])) {
         $result['session'] = 1;
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
@@ -104,6 +104,46 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cerrar la sesión';
                 }
                 break;
+        }
+    } else {
+         // Se compara la acción a realizar cuando el administrador no ha iniciado sesión.
+         switch ($_GET['action']) {
+            case 'readUsers':
+                if ($profesor->readAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Debe autenticarse para ingresar';
+                } else {
+                    $result['error'] = 'Debe crear un administrador para comenzar';
+                }
+                break;
+            case 'signUp':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$profesor->setNombre($_POST['nombreProfesor']) or
+                    !$profesor->setCorreo($_POST['correoProfesor']) or
+                    !$profesor->setClave($_POST['claveProfesor'])
+                ) {
+                    $result['error'] = $profesor->getDataError();
+                } elseif ($_POST['claveAdministrador'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
+                } elseif ($profesor->createRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Administrador registrado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al registrar el administrador';
+                }
+                break;
+            case 'logIn':
+                $_POST = Validator::validateForm($_POST);
+                if ($profesor->checkUser($_POST['correo'], $_POST['clave'])) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Autenticación correcta';
+                } else {
+                    $result['error'] = 'Credenciales incorrectas';
+                }
+                break;
+            default:
+                $result['error'] = 'Acción no disponible fuera de la sesión';
         }
     }
     // Se obtiene la excepción del servidor de base de datos por si ocurrió un problema.

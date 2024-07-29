@@ -39,6 +39,22 @@ class profesorHandler{
         $params = array($this->nombre, $this->carnet, $this->correo); 
         return Database::executeRow($sql, $params); 
     }
+    
+    public function checkUser($username, $password)
+    {
+        $sql = 'SELECT id_profesores, correo_profesor, correo_profesor
+            FROM administradores
+            WHERE  correo_profesor = ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+        if ($data && password_verify($password, $data['clave_profesor'])) {
+            $_SESSION['idProfesor'] = $data['id_profesores'];
+            $_SESSION['correo'] = $data['correo_profesor'];
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     // METODO CREATE REGISTRO 
