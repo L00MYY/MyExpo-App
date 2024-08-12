@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const PropuestasScreen = () => {
-  const navigation = useNavigation();
+
+export default function PropuestasScreen({ navigation }) {
   const propuestas = [
     { nombre: 'Proyecto 1', descripcion: 'Proyecto se basa en realizar....' },
     { nombre: 'Proyecto 2', descripcion: 'Proyecto se basa en realizar....' },
@@ -24,7 +24,7 @@ const PropuestasScreen = () => {
           </View>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('crearPropuesta')}>
+      <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('CrearPropuesta')}>
         <Text style={styles.createButtonText}>Crear Propuesta</Text>
       </TouchableOpacity>
     </View>
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PropuestasScreen;
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Alert, Image } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
 
@@ -70,19 +70,24 @@ export default function Registro({ navigation }) {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Bienvenido</Text>
+             <Image
+                    source={require('../img/logo-ricaldone.png')}
+                    style={styles.logo}
+                />
             <Text style={styles.subtitle}>Registra tu cuenta</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nombre"
                 value={nombre}
                 onChangeText={setNombre}
+                placeholderTextColor='#FFF'
             />
             <TextInput
                 style={styles.input}
                 placeholder="Carnet"
                 value={carnet}
                 onChangeText={setCarnet}
+                placeholderTextColor='#FFF'
             />
             <TextInput
                 style={styles.input}
@@ -90,6 +95,7 @@ export default function Registro({ navigation }) {
                 value={email}
                 onChangeText={setCorreo}
                 keyboardType="email-address"
+                placeholderTextColor='#FFF'
             />
             <TextInput
                 style={styles.input}
@@ -97,6 +103,7 @@ export default function Registro({ navigation }) {
                 value={clave}
                 onChangeText={setClave}
                 secureTextEntry
+                placeholderTextColor='#FFF'
             />
             <TextInput
                 style={styles.input}
@@ -104,6 +111,7 @@ export default function Registro({ navigation }) {
                 value={confirmarClave}
                 onChangeText={setConfirmarClave}
                 secureTextEntry
+                placeholderTextColor='#FFF'
             />
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleCreate}>
@@ -137,28 +145,33 @@ export default function Registro({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 16,
         paddingTop: 50,
     },
+    scrollViewContent: {
+        flexGrow: 1, // Asegura que el contenido se expanda para ajustarse al ScrollView
+    }, 
     title: {
         fontSize: 32,
+        color: '#fff',
     },
     subtitle: {
         fontSize: 18,
-        color: '#000',
+        color: '#fff',
         marginBottom: 24,
     },
     input: {
         width: '100%',
         height: 50,
-        borderColor: '#000',
+        borderColor: '#fff',
         borderWidth: 1,
         marginBottom: 12,
         paddingLeft: 10,
         fontSize: 16,
+        color: '#fff'
     },
     buttonContainer: {
         width: '100%',
@@ -167,29 +180,34 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         height: 50,
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 24,
     },
     buttonText: {
-        color: '#fff',
+        color: '#000',
         fontSize: 18,
         fontWeight: 'bold',
     },
+    logo: {
+        width: 270,
+        height: 50,
+        alignSelf: 'center',
+    },
     alertContentContainer: {
-        // Puedes ajustar el estilo según sea necesario
+
     },
     alertTitle: {
-        // Puedes ajustar el estilo según sea necesario
+
     },
     alertMessage: {
-        // Puedes ajustar el estilo según sea necesario
+
     },
     alertConfirmButton: {
-        // Puedes ajustar el estilo según sea necesario
+
     },
     alertConfirmButtonText: {
-        // Puedes ajustar el estilo según sea necesario
+
     }
 });

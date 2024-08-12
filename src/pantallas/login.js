@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
 
@@ -113,13 +113,16 @@ export default function Login({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>Iniciar Sesión</Text>
+            <Image
+                    source={require('../img/logo-ricaldone.png')}
+                    style={styles.logo}
+                />
             <TextInput
                 value={correo}
                 onChangeText={setCorreo}
                 style={styles.input}
                 placeholder="Correo electrónico"
-                placeholderTextColor="#aaa"
+                placeholderTextColor="#fff"
                 keyboardType="email-address"
             />
             <TextInput
@@ -128,7 +131,7 @@ export default function Login({ navigation }) {
                 style={styles.input}
                 placeholder="Contraseña"
                 secureTextEntry={true}
-                placeholderTextColor="#aaa"
+                placeholderTextColor="#fff"
             />
             <TouchableOpacity>
                 <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
@@ -168,48 +171,52 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         paddingHorizontal: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
     },
     headerText: {
-        fontSize: 24,
+        height: 16, 
+        fontSize: 22,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginBottom: 15,
         textAlign: 'center',
-        color: '#000',
+        color: '#fff',
+    },
+    scrollViewContent: {
+        flexGrow: 1, // Asegura que el contenido se expanda para ajustarse al ScrollView
     },
     input: {
         height: 50,
-        borderColor: '#000',
+        borderColor: '#fff',
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
-        marginBottom: 20,
+        marginBottom: 15,
         fontSize: 16,
-        color: '#000',
+        color: '#fff'
     },
     forgotPasswordText: {
         fontSize: 14,
-        color: '#000',
+        color: '#fff',
         marginBottom: 15,
         textAlign: 'center',
         textDecorationLine: 'underline',
     },
     registerText: {
         fontSize: 14,
-        color: '#000',
+        color: '#fff',
         marginBottom: 20,
         textAlign: 'center',
         textDecorationLine: 'underline',
     },
     loginButton: {
         height: 50,
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
     },
     loginButtonText: {
-        color: '#fff',
+        color: '#000',
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -232,5 +239,11 @@ const styles = StyleSheet.create({
     },
     alertConfirmButtonText: {
         fontSize: 16,
+    },
+    logo: {
+        width: 270,
+        height: 50,
+        alignSelf: 'center',
+        marginBottom: 80, 
     },
 });
