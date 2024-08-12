@@ -24,7 +24,17 @@ const CrearPropuesta = () => {
       estado,
     };
     agregarPropuesta(nuevaPropuesta);
-    navigation.navigate('ListaPropuestas');
+    // Limpiar campos del formulario 
+    setNombre('');
+    setObjetivos('');
+    setJustificacion('');
+    setDescripcion('');
+    setTipoPropuesta('');
+    setEstado(false);
+
+    // Navegar a la pantalla 'Propuesta' después de agregar
+    navigation.navigate('Propuesta');
+    alert('Propuesta añadida');
   };
 
   return (
@@ -32,29 +42,54 @@ const CrearPropuesta = () => {
       <Text style={styles.title}>Crear Propuesta</Text>
 
       <Text style={styles.label}>Nombre:</Text>
-      <TextInput style={styles.input} value={nombre} onChangeText={setNombre} />
+      <TextInput 
+        style={styles.input} 
+        value={nombre} 
+        onChangeText={setNombre} 
+        placeholder="Nombre de la propuesta" 
+      />
 
       <Text style={styles.label}>Objetivos:</Text>
-      <TextInput style={styles.input} value={objetivos} onChangeText={setObjetivos} />
+      <TextInput 
+        style={styles.input} 
+        value={objetivos} 
+        onChangeText={setObjetivos} 
+        placeholder="Objetivos de la propuesta" 
+      />
 
       <Text style={styles.label}>Justificación:</Text>
-      <TextInput style={styles.input} value={justificacion} onChangeText={setJustificacion} />
+      <TextInput 
+        style={styles.input} 
+        value={justificacion} 
+        onChangeText={setJustificacion} 
+        placeholder="Justificación de la propuesta" 
+      />
 
       <Text style={styles.label}>Descripción:</Text>
-      <TextInput style={styles.input} value={descripcion} onChangeText={setDescripcion} />
+      <TextInput 
+        style={styles.input} 
+        value={descripcion} 
+        onChangeText={setDescripcion} 
+        placeholder="Descripción de la propuesta" 
+      />
 
       <Text style={styles.label}>Tipo propuesta:</Text>
-      <TextInput style={styles.input} value={tipoPropuesta} onChangeText={setTipoPropuesta} />
+      <TextInput 
+        style={styles.input} 
+        value={tipoPropuesta} 
+        onChangeText={setTipoPropuesta} 
+        placeholder="Tipo de propuesta" 
+      />
 
       <Text style={styles.label}>Estado:</Text>
-      <Switch value={estado} onValueChange={setEstado} />
+      <Switch 
+        value={estado} 
+        onValueChange={setEstado} 
+      />
 
       <Button
         title="Añadir"
-        onPress={() => {
-          navigation.navigate('Propuesta');
-          alert('Propuesta añadida');
-        }}
+        onPress={handleAgregarPropuesta} // Llama a la función handleAgregarPropuesta
       />
     </ScrollView>
   );
@@ -78,7 +113,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#fff', 
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
