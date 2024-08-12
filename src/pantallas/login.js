@@ -16,7 +16,7 @@ export default function Login({ navigation }) {
     // Función para validar si hay una sesión activa
     const validarSesion = async () => {
         try {
-            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=getUser`, {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getUser`, {
                 method: 'GET'
             });
 
@@ -36,7 +36,7 @@ export default function Login({ navigation }) {
     // Función para cerrar la sesión activa
     const cerrarSesion = async () => {
         try {
-            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=logOut`, {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logOut`, {
                 method: 'GET'
             });
 
@@ -74,7 +74,7 @@ export default function Login({ navigation }) {
             formData.append('correoProfesor', correo);
             formData.append('claveProfesor', contrasenia);
 
-            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=logIn`, {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logIn`, {
                 method: 'POST',
                 body: formData
             });

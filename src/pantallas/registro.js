@@ -43,26 +43,26 @@ export default function Registro({ navigation }) {
             formData.append('correoProfesor', email);
             formData.append('claveProfesor', clave);
             formData.append('confirmarClave', confirmarClave);
-            console.log(nombre,carnet,email,clave,confirmarClave);
-            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=signUp`, {
+            //console.log(nombre,carnet,email,clave,confirmarClave);
+            //console.log(formData);
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=signUp`, {
                 method: 'POST',
                 body: formData
             });
-            console.log(response);
+            
+            //console.log(response);
             const data = await response.json();
-
+            console.log(data);
             if (data.status) {
-                const data = JSON.parse(textResponse); // Intenta analizar el JSON manualmente
-                console.log('Parsed Data:', data); // Muestra los datos parseados en la consola
-                Alert.alert('Cuenta registrada correctamente');
+                Alert.alert('Cuenta registrada correctamente.');
                 setTimeout(() => {
                     navigation.navigate('Login');
                 }, 2000);
-            } else {
-                showAlertWithMessage(data.error || 'Ocurrió un problema al registrar la cuenta');
+            } else {  
+                showAlertWithMessage(data.error || 'Ocurrió un problema al registrar la cuenta.');
             }
         } catch (error) {
-            Alert.alert('Ocurrió un problema al registrar la cuenta');
+            Alert.alert('Ocurrió un problema al registrar la cuenta.');
         } finally {
             setIsRegistering(false); 
         }
