@@ -2,90 +2,76 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
- 
-// Componente principal de registro.
+
 export default function Registro({ navigation }) {
-    // Obtención de la IP del servidor desde el archivo de constantes.
     const ip = Constantes.IP;
- 
+
     // Estados para almacenar los datos del formulario.
     const [nombre, setNombre] = useState('');
     const [carnet, setCarnet] = useState('');
     const [email, setCorreo] = useState('');
     const [clave, setClave] = useState('');
     const [confirmarClave, setConfirmarClave] = useState('');
-    const [showAlert, setShowAlert] = useState(false); // Estado para manejar la visibilidad de la alerta.
-    const [alertMessage, setAlertMessage] = useState(''); // Estado para manejar el mensaje de la alerta.
-    const [isRegistering, setIsRegistering] = useState(false); // Estado para indicar si se está registrando.
- 
-    // Expresión regular para validar el formato del teléfono (####-####).
-    const telefonoRegex = /^\d{4}-\d{4}$/;
- 
-    // Función para manejar el cambio de texto en el campo de teléfono.
-    const handleTextChange = (text) => {
-        let formatted = text.replace(/[^\d]/g, ''); // Elimina todos los caracteres no numéricos.
-        if (formatted.length > 8) {
-            formatted = formatted.slice(0, 8); // Limita a 8 dígitos.
-        }
-        if (formatted.length > 4) {
-            formatted = formatted.slice(0, 4) + '-' + formatted.slice(4);
-        }
-        setTelefono(formatted); // Actualiza el estado con el valor formateado.
-    };
- 
+    const [showAlert, setShowAlert] = useState(false); 
+    const [alertMessage, setAlertMessage] = useState(''); 
+    const [isRegistering, setIsRegistering] = useState(false); 
+
     // Función para mostrar una alerta con un mensaje específico.
     const showAlertWithMessage = (message) => {
-        setAlertMessage(message);  // Establece el mensaje de la alerta.
-        setShowAlert(true); // Muestra la alerta.
+        setAlertMessage(message);  
+        setShowAlert(true); 
     };
- 
+
     // Función asíncrona para manejar la creación de una cuenta.
     const handleCreate = async () => {
-        // Validaciones de los campos del formulario.
-        if (!nombre.trim() || !direccion.trim() || !telefono.trim() ||
-            !email.trim() || !clave.trim() || !confirmarClave.trim()) {
+        if (!nombre.trim() || !carnet.trim() || !email.trim() || !clave.trim() || !confirmarClave.trim()) {
             showAlertWithMessage("Debes llenar todos los campos");
             return;
-        } else if (!telefonoRegex.test(telefono)) {
-            showAlertWithMessage("El teléfono debe tener el formato correcto (####-####)");
+        }
+
+        if (clave !== confirmarClave) {
+            showAlertWithMessage("Las contraseñas no coinciden");
             return;
         }
- 
+
         setIsRegistering(true);
- 
+
         try {
-            // Creación de un objeto FormData para enviar los datos del formulario.
             const formData = new FormData();
             formData.append('nombreProfesor', nombre);
             formData.append('carnetProfesor', carnet);
             formData.append('correoProfesor', email);
             formData.append('claveProfesor', clave);
             formData.append('confirmarClave', confirmarClave);
-            // Envío de los datos del formulario al servidor.
-            const response = await fetch(`${ip}/services/public/profesorService.php?action=   `, {
+            console.log(nombre,carnet,email,clave,confirmarClave);
+            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=signUp`, {
                 method: 'POST',
                 body: formData
             });
+            console.log(response);
             const data = await response.json();
+
             if (data.status) {
+                const data = JSON.parse(textResponse); // Intenta analizar el JSON manualmente
+                console.log('Parsed Data:', data); // Muestra los datos parseados en la consola
                 Alert.alert('Cuenta registrada correctamente');
                 setTimeout(() => {
-                    navigation.navigate('Login'); // Redirección a la pantalla de inicio de sesión después de 2 segundos.
+                    navigation.navigate('Login');
                 }, 2000);
             } else {
-                showAlertWithMessage(data.error);
+                showAlertWithMessage(data.error || 'Ocurrió un problema al registrar la cuenta');
             }
         } catch (error) {
             Alert.alert('Ocurrió un problema al registrar la cuenta');
         } finally {
-            setIsRegistering(false); // Indica que se ha terminado el registro.
+            setIsRegistering(false); 
         }
     };
- 
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>Bienvenido</Text>
-            <Text style={styles.subtitle}>Registra tu cuenta para ver nuestros productos</Text>
+            <Text style={styles.subtitle}>Registra tu cuenta</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nombre"
@@ -94,8 +80,8 @@ export default function Registro({ navigation }) {
             />
             <TextInput
                 style={styles.input}
-                placeholder="carnet"
-                value={direccion}
+                placeholder="Carnet"
+                value={carnet}
                 onChangeText={setCarnet}
             />
             <TextInput
@@ -146,8 +132,8 @@ export default function Registro({ navigation }) {
             </View>
         </ScrollView>
     );
-};
- 
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

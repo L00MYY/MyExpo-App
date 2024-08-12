@@ -1,34 +1,22 @@
-// Importaciones
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
-import { useFocusEffect } from '@react-navigation/native';
 
-// Componente principal
 export default function Login({ navigation }) {
     const ip = Constantes.IP;
 
     // Estados
-    const [isContra, setIsContra] = useState(true);  // Estado para mostrar/ocultar la contraseña
     const [correo, setCorreo] = useState(''); // Estado para el campo del usuario
     const [contrasenia, setContrasenia] = useState(''); // Estado para el campo de la contraseña
     const [showAlert, setShowAlert] = useState(false); // Estado para mostrar/ocultar la alerta
     const [alertMessage, setAlertMessage] = useState(''); // Estado para el mensaje de la alerta
     const [showProgress, setShowProgress] = useState(false); // Estado para mostrar/ocultar el indicador de progreso
 
-    // Efecto para cargar los detalles del carrito al cargar la pantalla o al enfocarse en ella
-    useFocusEffect(
-        // La función useFocusEffect ejecuta un efecto cada vez que la pantalla se enfoca.
-        React.useCallback(() => {
-            validarSesion(); // Llama a la función getDetalleCarrito.
-        }, [])
-    );
-
     // Función para validar si hay una sesión activa
     const validarSesion = async () => {
         try {
-            const response = await fetch(`${ip}/services/public/profesorService.php?action=getUser`, {
+            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=getUser`, {
                 method: 'GET'
             });
 
@@ -74,7 +62,7 @@ export default function Login({ navigation }) {
 
     // Función para manejar el proceso de inicio de sesión
     const handlerLogin = async () => {
-        if (!usuario.trim() || !contrasenia.trim()) {
+        if (!correo.trim() || !contrasenia.trim()) {
             showAlertWithMessage('Por favor completa todos los campos'); // Verifica que los campos no estén vacíos
             return;
         }
@@ -83,10 +71,10 @@ export default function Login({ navigation }) {
 
         try {
             const formData = new FormData();
-            formData.append('correo', usuario);
-            formData.append('clave', contrasenia);
+            formData.append('correoProfesor', correo);
+            formData.append('claveProfesor', contrasenia);
 
-            const response = await fetch(`${ip}/services/public/profesorService.php?action=logIn`, {
+            const response = await fetch(`${ip}/services/serviceProfesores/profesor.php?action=logIn`, {
                 method: 'POST',
                 body: formData
             });
@@ -95,7 +83,7 @@ export default function Login({ navigation }) {
 
             if (data.status) {
                 setContrasenia('');
-                setUsuario('');
+                setCorreo('');
                 showAlertWithMessage('¡Bienvenido!'); // Muestra un mensaje de bienvenida
                 setTimeout(() => {
                     navigation.navigate('TabNavigator'); // Navega a la siguiente pantalla
@@ -114,7 +102,7 @@ export default function Login({ navigation }) {
     };
 
     // Función para navegar a la pantalla de registro
-    const irRegistrar = async () => {
+    const irRegistrar = () => {
         navigation.navigate('Registro');
     };
 
