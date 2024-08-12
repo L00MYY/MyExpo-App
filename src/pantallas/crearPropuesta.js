@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, Button, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Importa useNavigation desde react-navigation/native
+import { usePropuestas } from '../components/propuestasContext';
+import { useNavigation } from '@react-navigation/native';
 
 const CrearPropuesta = () => {
-  const navigation = useNavigation(); // Obtén el objeto de navegación usando useNavigation()
+  const { agregarPropuesta } = usePropuestas();
+  const navigation = useNavigation();
 
   const [nombre, setNombre] = useState('');
   const [objetivos, setObjetivos] = useState('');
@@ -11,6 +13,19 @@ const CrearPropuesta = () => {
   const [descripcion, setDescripcion] = useState('');
   const [tipoPropuesta, setTipoPropuesta] = useState('');
   const [estado, setEstado] = useState(false);
+
+  const handleAgregarPropuesta = () => {
+    const nuevaPropuesta = {
+      nombre,
+      objetivos,
+      justificacion,
+      descripcion,
+      tipoPropuesta,
+      estado,
+    };
+    agregarPropuesta(nuevaPropuesta);
+    navigation.navigate('ListaPropuestas');
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
