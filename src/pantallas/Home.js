@@ -1,19 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-
+import * as Constantes from '../../src/utils/Constantes';
 
 export default function Home({ navigation }) {
+
+  const ip = Constantes.IP;
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logOut`, {
+        method: 'GET'
+      });
+      const data = await response.json();
+      if (data.status) {
+        navigation.navigate('login');
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={require('../img/logo_banner.png')} 
-          style={styles.logo}
-        />
-
-          
-        <Icon name="person-outline" type="material" color="#000" />
+        <TouchableOpacity onPress={handleLogout}>
+          <Icon name="person-outline" type="material" color="#000" />
+        </TouchableOpacity>
       </View>
       <Text style={styles.welcomeText}>¡Bienvenido (nombre)!</Text>
       <View style={styles.section}>
