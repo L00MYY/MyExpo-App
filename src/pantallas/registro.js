@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import AwesomeAlert from 'react-n-awesome-alerts';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
  
 // Componente principal de registro.

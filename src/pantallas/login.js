@@ -1,10 +1,10 @@
 // Importaciones
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
 import { useFocusEffect } from '@react-navigation/native';
- 
+
 // Componente principal
 export default function Login({ navigation }) {
     const ip = Constantes.IP;
