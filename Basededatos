@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `profesores`;
 CREATE TABLE `profesores` (
   `id_profesores` INT NOT NULL AUTO_INCREMENT,
   `nombre_profesor` VARCHAR(50) NOT NULL,
-  `carnet_profesor` INT(11) NOT NULL,
+  `carnet_profesor` VARCHAR(11) NOT NULL,
   `correo_profesor` VARCHAR(50) NOT NULL,
   `clave_profesor` VARCHAR(40) NOT NULL,
   `id_especialidad` INT DEFAULT NULL,
