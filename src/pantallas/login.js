@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Login({ navigation }) {
     const ip = Constantes.IP;
@@ -13,7 +14,13 @@ export default function Login({ navigation }) {
     const [alertMessage, setAlertMessage] = useState(''); // Estado para el mensaje de la alerta
     const [showProgress, setShowProgress] = useState(false); // Estado para mostrar/ocultar el indicador de progreso
 
-    // Función para validar si hay una sesión activa
+    // Efecto para cargar los detalles del carrito al cargar la pantalla o al enfocarse en ella
+    useFocusEffect(
+        // La función useFocusEffect ejecuta un efecto cada vez que la pantalla se enfoca.
+        React.useCallback(() => {
+            validarSesion(); // Llama a la función getDetalleCarrito.
+        }, [])
+    );
     const validarSesion = async () => {
         try {
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getUser`, {
@@ -23,15 +30,17 @@ export default function Login({ navigation }) {
             const data = await response.json();
 
             if (data.status === 1) {
-                navigation.navigate('TabNavigator'); // Navega a la siguiente pantalla
+                navigation.navigate('TabNavigator');
+                console.log("Se ingresa con la sesión activa")
             } else {
-                console.log("No hay sesión activa");
+                console.log("No hay sesión activa")
+                return
             }
         } catch (error) {
             console.error(error);
-            showAlertWithMessage('Ocurrió un error al validar la sesión'); // Muestra un mensaje de error
+            Alert.alert('Error', 'Ocurrió un error al validar la sesión');
         }
-    };
+    }
 
     // Función para cerrar la sesión activa
     const cerrarSesion = async () => {
@@ -114,9 +123,9 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.container}>
             <Image
-                    source={require('../img/logo-ricaldone.png')}
-                    style={styles.logo}
-                />
+                source={require('../img/logo-ricaldone.png')}
+                style={styles.logo}
+            />
             <TextInput
                 value={correo}
                 onChangeText={setCorreo}
@@ -174,7 +183,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
     },
     headerText: {
-        height: 16, 
+        height: 16,
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 15,
@@ -244,6 +253,6 @@ const styles = StyleSheet.create({
         width: 270,
         height: 50,
         alignSelf: 'center',
-        marginBottom: 80, 
+        marginBottom: 80,
     },
 });
