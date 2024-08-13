@@ -16,6 +16,7 @@ import Equipo from './src/pantallas/equipos';
 import DetalleEquipo from './src/pantallas/DetalleEquipo';
 import Home from './src/pantallas/Home';
 import TabNavigator from './src/tabNavigator/tabNavigator';
+import NuevaContraseña from './src/pantallas/NuevaContraseña';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,6 +56,7 @@ export default function App() {
               <Stack.Screen name="RecuperarContra" component={RecuperarContra} />
               <Stack.Screen name="VerificarCodigo" component={VerificarCodigo} />
               <Stack.Screen name="DetalleEquipo" component={DetalleEquipo} />
+              <Stack.Screen name="NuevaContraseña" component={NuevaContraseña} />
             </>
           ) : (
             <Stack.Screen name="SplashScreen" component={SplashScreen} />

@@ -43,12 +43,7 @@ export default function RecuperarClave({ navigation }) {
                 console.log('Respuesta del servidor:', responseData);
 
                 if (responseData.status) {
-                    setAlertMessage('Revise su correo electrónico');
-                    setShowAlert(true);
-                    setTimeout(() => {
-                        setShowAlert(false);
-                        navigation.navigate('VerificarCodigo', { correoProfesor: data.correo_profesor });
-                    }, 2000); // Esperar 2 segundos
+                    navigation.navigate('VerificarCodigo', { correoProfesor: data.correo_profesor });
                 } else {
                     setAlertMessage(responseData.message || 'Error al enviar el correo');
                     setShowAlert(true);
@@ -99,7 +94,7 @@ export default function RecuperarClave({ navigation }) {
         }
     };
 
-    
+
     // Dentro de tu componente RecuperarClave
     useFocusEffect(
         React.useCallback(() => {
