@@ -76,6 +76,7 @@ CREATE TABLE `profesores` (
   `carnet_profesor` VARCHAR(11) NOT NULL,
   `correo_profesor` VARCHAR(50) NOT NULL,
   `clave_profesor` VARCHAR(120) NOT NULL,
+  `codigo_recuperacion` VARCHAR (6) NULL,
   `id_especialidad` INT DEFAULT NULL,
   PRIMARY KEY (`id_profesores`),
   UNIQUE KEY `carnet_profesor` (`carnet_profesor`),
