@@ -14,7 +14,7 @@ export default function Home({ navigation }) {
       });
       const data = await response.json();
       if (data.status) {
-        navigation.navigate('login');
+        navigation.navigate('Login');
       } else {
         Alert.alert('Error', data.error);
       }
