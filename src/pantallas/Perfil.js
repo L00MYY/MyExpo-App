@@ -131,7 +131,6 @@ export default function Perfil({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Mi información</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nombre del profesor"

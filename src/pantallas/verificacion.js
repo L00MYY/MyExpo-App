@@ -11,7 +11,7 @@ export default function SignUp({ navigation }) {
                 style={styles.input}
                 placeholder="Correo"
                 placeholderTextColor="#888"
-                keyboardType="email-address"
+                keyboardType="phone"
                 value={verificacion}
                 onChangeText={setVerificacion}
             />

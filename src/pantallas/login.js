@@ -117,6 +117,11 @@ export default function Login({ navigation }) {
         navigation.navigate('Registro');
     };
 
+// Función para navegar a la pantalla de registro
+const ircorreo = () => {
+    navigation.navigate('RecuperarContra');
+};
+
     // Efecto para validar la sesión al montar el componente
     useEffect(() => {
         validarSesion();
@@ -144,7 +149,7 @@ export default function Login({ navigation }) {
                 secureTextEntry={true}
                 placeholderTextColor="#fff"
             />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={ircorreo}>
                 <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={irRegistrar}>
