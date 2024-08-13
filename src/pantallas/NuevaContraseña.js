@@ -105,7 +105,7 @@ export default function NuevaContraseña({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
         justifyContent: 'center',
         padding: 16,
         paddingTop: 50,
@@ -117,13 +117,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: '#fff',
+        color: '#000',
     },
     instructions: {
         fontSize: 16,
         textAlign: 'center',
         marginBottom: 20,
-        color: '#fff',
+        color: '#000',
     },
     input: {
         marginTop: 10,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         height: 50,
-        backgroundColor: 'red',
+        backgroundColor: 'black',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
