@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
 import { useFocusEffect } from '@react-navigation/native';
@@ -87,6 +87,7 @@ export default function Login({ navigation }) {
             formData.append('correoProfesor', correoTrimmed);
             formData.append('claveProfesor', claveTrimmed);
             console.log(formData);
+
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logIn`, {
                 method: 'POST',
                 body: formData
