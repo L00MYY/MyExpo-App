@@ -27,7 +27,7 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleLogout}>
-          <Icon name="person-outline" type="material" color="#000" />
+          <Icon name="logout" type="material" color="#000" />
         </TouchableOpacity>
       </View>
       <Text style={styles.welcomeText}>¡Bienvenido (nombre)!</Text>
