@@ -15,19 +15,10 @@ import CrearPropuesta from './src/pantallas/crearPropuesta';
 import Equipo from './src/pantallas/equipos';
 import DetalleEquipo from './src/pantallas/DetalleEquipo';
 import Home from './src/pantallas/Home';
+import TabNavigator from './src/tabNavigator/tabNavigator';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function MyTabNavigator() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Propuesta" component={Propuesta} />
-      <Tab.Screen name="Equipo" component={Equipo} />
-    </Tab.Navigator>
-  );
-}
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -58,7 +49,7 @@ export default function App() {
             <>
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Registro" component={Registro} />
-              <Stack.Screen name="TabNavigator" component={MyTabNavigator} />
+              <Stack.Screen name="TabNavigator" component={TabNavigator} />
               <Stack.Screen name="CrearPropuesta" component={CrearPropuesta} />
               <Stack.Screen name="CambiarContra" component={CambiarContra} />
               <Stack.Screen name="RecuperarContra" component={RecuperarContra} />
