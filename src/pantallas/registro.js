@@ -43,8 +43,8 @@ export default function Registro({ navigation }) {
             formData.append('correoProfesor', email);
             formData.append('claveProfesor', clave);
             formData.append('confirmarClave', confirmarClave);
-            //console.log(nombre,carnet,email,clave,confirmarClave);
-            //console.log(formData);
+            console.log(formData);
+
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=signUp`, {
                 method: 'POST',
                 body: formData

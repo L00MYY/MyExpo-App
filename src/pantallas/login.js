@@ -71,45 +71,47 @@ export default function Login({ navigation }) {
 
     // Función para manejar el proceso de inicio de sesión
     const handlerLogin = async () => {
-        if (!correo.trim() || !clave.trim()) {
-            showAlertWithMessage('Por favor completa todos los campos'); // Verifica que los campos no estén vacíos
+        const correoTrimmed = correo.trim();
+        const claveTrimmed = clave.trim();
+    
+        if (!correoTrimmed || !claveTrimmed) {
+            showAlertWithMessage('Por favor completa todos los campos');
             return;
         }
-
-        showAlertWithMessage('Iniciando sesión...', true); // Muestra un mensaje de progreso
-
+    
+        showAlertWithMessage('Iniciando sesión...', true);
+    
         try {
             const formData = new FormData();
-            formData.append('correoProfesor', correo);
-            formData.append('claveProfesor', clave);
+            formData.append('correoProfesor', correoTrimmed);
+            formData.append('claveProfesor', claveTrimmed);
 
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logIn`, {
                 method: 'POST',
                 body: formData
             });
-
+    
             const data = await response.json();
-
+    
             if (data.status) {
                 setClave('');
                 setCorreo('');
-                showAlertWithMessage('¡Bienvenido!'); // Muestra un mensaje de bienvenida
+                showAlertWithMessage('¡Bienvenido!');
                 setTimeout(() => {
-                    navigation.navigate('TabNavigator'); // Navega a la siguiente pantalla
+                    navigation.navigate('TabNavigator');
                     setShowAlert(false);
                 }, 2000);
             } else {
                 console.log(data);
-                showAlertWithMessage(data.error); // Muestra un mensaje de error
+                showAlertWithMessage(data.error);
             }
         } catch (error) {
             console.error(error, "Error desde Catch");
-            showAlertWithMessage('Ocurrió un error al iniciar sesión');  // Muestra un mensaje de error
+            showAlertWithMessage('Ocurrió un error al iniciar sesión');
         } finally {
-            setShowProgress(false); // Oculta el indicador de progreso
+            setShowProgress(false);
         }
     };
-
     // Función para navegar a la pantalla de registro
     const irRegistrar = () => {
         navigation.navigate('Registro');
