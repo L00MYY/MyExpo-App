@@ -21,6 +21,7 @@ export default function Login({ navigation }) {
             validarSesion(); // Llama a la función getDetalleCarrito.
         }, [])
     );
+    
     const validarSesion = async () => {
         try {
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getUser`, {
