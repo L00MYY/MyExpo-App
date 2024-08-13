@@ -73,26 +73,26 @@ export default function Login({ navigation }) {
     const handlerLogin = async () => {
         const correoTrimmed = correo.trim();
         const claveTrimmed = clave.trim();
-    
+
         if (!correoTrimmed || !claveTrimmed) {
             showAlertWithMessage('Por favor completa todos los campos');
             return;
         }
-    
+
         showAlertWithMessage('Iniciando sesión...', true);
-    
+
         try {
             const formData = new FormData();
             formData.append('correoProfesor', correoTrimmed);
             formData.append('claveProfesor', claveTrimmed);
-
+            console.log(formData);
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logIn`, {
                 method: 'POST',
                 body: formData
             });
-    
+
             const data = await response.json();
-    
+            console.log(data);
             if (data.status) {
                 setClave('');
                 setCorreo('');

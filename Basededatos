@@ -75,7 +75,7 @@ CREATE TABLE `profesores` (
   `nombre_profesor` VARCHAR(50) NOT NULL,
   `carnet_profesor` VARCHAR(11) NOT NULL,
   `correo_profesor` VARCHAR(50) NOT NULL,
-  `clave_profesor` VARCHAR(4r0) NOT NULL,
+  `clave_profesor` VARCHAR(120) NOT NULL,
   `id_especialidad` INT DEFAULT NULL,
   PRIMARY KEY (`id_profesores`),
   UNIQUE KEY `carnet_profesor` (`carnet_profesor`),
@@ -110,7 +110,7 @@ CREATE TABLE `alumnos` (
   `nombre_alumno` VARCHAR(36) NOT NULL,
   `carnet_alumno` INT(11) NOT NULL,
   `correo_alumno` VARCHAR(100) NOT NULL,
-  `clave_alumno` VARCHAR(50) NOT NULL,
+  `clave_alumno` VARCHAR(120) NOT NULL,
   `id_curso` INT DEFAULT NULL,
   PRIMARY KEY (`id_alumno`),
   UNIQUE KEY `carnet_alumno` (`carnet_alumno`),
@@ -206,3 +206,57 @@ CREATE TABLE `equipo_expo` (
   CONSTRAINT `fk_id_proyecto_equipo_expo` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id_proyecto`),
   CONSTRAINT `fk_id_rol_equipo_expo` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Consultas para seleccionar todas las tablas
+
+-- Seleccionar todos los registros de la tabla `administradores`
+SELECT * FROM administradores;
+
+-- Seleccionar todos los registros de la tabla `grupos_tecnicos`
+SELECT * FROM grupos_tecnicos;
+
+-- Seleccionar todos los registros de la tabla `nivel_academico`
+SELECT * FROM nivel_academico;
+
+-- Seleccionar todos los registros de la tabla `proyectos`
+SELECT * FROM proyectos;
+
+-- Seleccionar todos los registros de la tabla `roles`
+SELECT * FROM roles;
+
+-- Seleccionar todos los registros de la tabla `grados`
+SELECT * FROM grados;
+
+-- Seleccionar todos los registros de la tabla `especialidades`
+SELECT * FROM especialidades;
+
+-- Seleccionar todos los registros de la tabla `profesores`
+SELECT * FROM profesores;
+
+-- Seleccionar todos los registros de la tabla `cursos`
+SELECT * FROM cursos;
+
+-- Seleccionar todos los registros de la tabla `alumnos`
+SELECT * FROM alumnos;
+
+-- Seleccionar todos los registros de la tabla `archivo_adjunto`
+SELECT * FROM archivo_adjunto;
+
+-- Seleccionar todos los registros de la tabla `secciones`
+SELECT * FROM secciones;
+
+-- Seleccionar todos los registros de la tabla `estado_propuesta`
+SELECT * FROM estado_propuesta;
+
+-- Seleccionar todos los registros de la tabla `tipo_propuestas`
+SELECT * FROM tipo_propuestas;
+
+-- Seleccionar todos los registros de la tabla `propuestas`
+SELECT * FROM propuestas;
+
+-- Seleccionar todos los registros de la tabla `dt_curso`
+SELECT * FROM dt_curso;
+
+-- Seleccionar todos los registros de la tabla `equipo_expo`
+SELECT * FROM equipo_expo;
