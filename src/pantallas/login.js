@@ -9,7 +9,7 @@ export default function Login({ navigation }) {
 
     // Estados
     const [correo, setCorreo] = useState(''); // Estado para el campo del usuario
-    const [contrasenia, setContrasenia] = useState(''); // Estado para el campo de la contraseña
+    const [clave, setClave] = useState(''); // Estado para el campo de la clave
     const [showAlert, setShowAlert] = useState(false); // Estado para mostrar/ocultar la alerta
     const [alertMessage, setAlertMessage] = useState(''); // Estado para el mensaje de la alerta
     const [showProgress, setShowProgress] = useState(false); // Estado para mostrar/ocultar el indicador de progreso
@@ -71,7 +71,7 @@ export default function Login({ navigation }) {
 
     // Función para manejar el proceso de inicio de sesión
     const handlerLogin = async () => {
-        if (!correo.trim() || !contrasenia.trim()) {
+        if (!correo.trim() || !clave.trim()) {
             showAlertWithMessage('Por favor completa todos los campos'); // Verifica que los campos no estén vacíos
             return;
         }
@@ -81,7 +81,7 @@ export default function Login({ navigation }) {
         try {
             const formData = new FormData();
             formData.append('correoProfesor', correo);
-            formData.append('claveProfesor', contrasenia);
+            formData.append('claveProfesor', clave);
 
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logIn`, {
                 method: 'POST',
@@ -91,7 +91,7 @@ export default function Login({ navigation }) {
             const data = await response.json();
 
             if (data.status) {
-                setContrasenia('');
+                setClave('');
                 setCorreo('');
                 showAlertWithMessage('¡Bienvenido!'); // Muestra un mensaje de bienvenida
                 setTimeout(() => {
@@ -135,8 +135,8 @@ export default function Login({ navigation }) {
                 keyboardType="email-address"
             />
             <TextInput
-                value={contrasenia}
-                onChangeText={setContrasenia}
+                value={clave}
+                onChangeText={setClave}
                 style={styles.input}
                 placeholder="Contraseña"
                 secureTextEntry={true}
