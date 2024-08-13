@@ -1,5 +1,8 @@
 import React, { createContext, useState, useContext } from 'react';
 
+/*comparte el estado y funciones relacionadas a crear, actualizar y eliminar propuesta, usePropuesta es un hook 
+de facil acceso al contexto y permite acceder y devolver resultados segun lo necesitado */
+
 const PropuestasContext = createContext();
 
 export const usePropuestas = () => useContext(PropuestasContext);
