@@ -115,9 +115,9 @@ export default function Login({ navigation }) {
         }
     };
     // Función para navegar a la pantalla de registro
-    const irRegistrar = () => {
-        navigation.navigate('Registro');
-    };
+    // const irRegistrar = () => {
+    //     navigation.navigate('Registro');
+    // };
 
 // Función para navegar a la pantalla de registro
 const ircorreo = () => {
@@ -153,9 +153,6 @@ const ircorreo = () => {
             />
             <TouchableOpacity onPress={ircorreo}>
                 <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={irRegistrar}>
-                <Text style={styles.registerText}>¿No tienes cuenta? Regístrate</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handlerLogin} style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>INICIAR SESIÓN</Text>

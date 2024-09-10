@@ -8,7 +8,6 @@ export default function Registro({ navigation }) {
 
     // Estados para almacenar los datos del formulario.
     const [nombre, setNombre] = useState('');
-    const [carnet, setCarnet] = useState('');
     const [email, setCorreo] = useState('');
     const [clave, setClave] = useState('');
     const [confirmarClave, setConfirmarClave] = useState('');
@@ -24,7 +23,7 @@ export default function Registro({ navigation }) {
 
     // Función asíncrona para manejar la creación de una cuenta.
     const handleCreate = async () => {
-        if (!nombre.trim() || !carnet.trim() || !email.trim() || !clave.trim() || !confirmarClave.trim()) {
+        if (!nombre.trim() || !email.trim() || !clave.trim() || !confirmarClave.trim()) {
             showAlertWithMessage("Debes llenar todos los campos");
             return;
         }
@@ -39,11 +38,10 @@ export default function Registro({ navigation }) {
         try {
             const formData = new FormData();
             formData.append('nombreProfesor', nombre);
-            formData.append('carnetProfesor', carnet);
             formData.append('correoProfesor', email);
             formData.append('claveProfesor', clave);
             formData.append('confirmarClave', confirmarClave);
-            console.log(formData);
+            console.log("zorra", formData);
 
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=signUp`, {
                 method: 'POST',
@@ -52,7 +50,7 @@ export default function Registro({ navigation }) {
             
             //console.log(response);
             const data = await response.json();
-            console.log(data);
+            console.log("perra", data);
             if (data.status) {
                 Alert.alert('Cuenta registrada correctamente.');
                 setTimeout(() => {
@@ -80,13 +78,6 @@ export default function Registro({ navigation }) {
                 placeholder="Nombre"
                 value={nombre}
                 onChangeText={setNombre}
-                placeholderTextColor='#FFF'
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Carnet"
-                value={carnet}
-                onChangeText={setCarnet}
                 placeholderTextColor='#FFF'
             />
             <TextInput
