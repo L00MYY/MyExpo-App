@@ -7,6 +7,45 @@ export default function Home({ navigation }) {
 
   const ip = Constantes.IP;
 
+  //Funcion para obtener el nombre del usuario
+  const getUser = async () => {
+    try {
+        const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getUser`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Server response:', data);
+
+        if (data.status) {
+            if (data.cliente && data.cliente.nombre_cliente) {
+                setNombre(data.cliente.nombre_cliente);
+            } else {
+                setAlertTitle('Error');
+                setAlertMessage('La respuesta del servidor no contiene el nombre del profesor.');
+                setShowAlert(true);
+            }
+        } else {
+            setAlertTitle('Error');
+            setAlertMessage(data.error || 'Error desconocido del servidor.');
+            setShowAlert(true);
+        }
+    } catch (error) {
+        setAlertTitle('Error');
+        setAlertMessage(`Ocurrió un error al obtener los datos del usuario: ${error.message}`);
+        setShowAlert(true);
+    }
+};
+
+     // UseEffect para obtener el nombre del usuario al montar el componente
+useEffect(() => {
+    getUser();
+}, []);
+
   const handleLogout = async () => {
     try {
       const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logOut`, {
