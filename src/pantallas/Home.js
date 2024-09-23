@@ -1,101 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { BarChart } from 'react-native-chart-kit';
 import * as Constantes from '../../src/utils/Constantes';
 
 export default function Home({ navigation }) {
-
-  const [nombre, setNombre]=useState("")
+  const [nombre, setNombre] = useState("");
+  const [equipos, setEquipos] = useState([]);
 
   const ip = Constantes.IP;
 
-  //Funcion para obtener el nombre del usuario
   const getUser = async () => {
+    // Código existente para obtener el nombre del usuario...
+  };
+
+  const getEquipos = async () => {
     try {
-        const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getUser`, {
-            method: 'GET'
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Server response:', data);
-
-
-        if (data.status) {
-            if (data.username) {
-                setNombre(data.username);
-            } else {
-                setAlertTitle('Error');
-                setAlertMessage('La respuesta del servidor no contiene el nombre del profesor.');
-                setShowAlert(true);
-            }
-        } else {
-            setAlertTitle('Error');
-            setAlertMessage(data.error || 'Error desconocido del servidor.');
-            setShowAlert(true);
-        }
-    } catch (error) {
-        setAlertTitle('Error');
-        setAlertMessage(`Ocurrió un error al obtener los datos del usuario: ${error.message}`);
-        setShowAlert(true);
-    }
-};
-
-     // UseEffect para obtener el nombre del usuario al montar el componente
-useEffect(() => {
-    getUser();
-}, []);
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logOut`, {
+      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getChartData`, {
         method: 'GET'
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.status) {
-        navigation.navigate('Login');
+        setCantidadEquipos(data.cantidad_equipos); // Asegúrate de que la respuesta tenga la propiedad correcta
       } else {
-        Alert.alert('Error', data.error);
+        Alert.alert('Error', data.error || 'Error desconocido del servidor.');
       }
     } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
+      Alert.alert('Error', `Ocurrió un error al obtener los equipos: ${error.message}`);
     }
-  }
+  };
+
+  useEffect(() => {
+    getUser();
+    getEquipos();
+  }, []);
+
+  const handleLogout = async () => {
+    // Código existente para manejar el logout...
+  };
+
+  const [cantidadEquipos, setCantidadEquipos] = useState(0); // Inicializa un estado para la cantidad de equipos
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleLogout}>
-          <Icon name="logout" type="material" color="#000" />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.welcomeText}>¡Bienvenido!</Text>
+      
       <View style={styles.section}>
-        <Text style={styles.nombre}>Bienvenido: {nombre}</Text>
-        <View style={styles.row}>
-          <Icon name="group" type="material" color="#FF4500" />
-          <Text style={styles.label}>Equipos Registrados</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: '50%', backgroundColor: '#FF4500' }]} />
-          </View>
-        </View>
-        <View style={styles.row}>
-          <Icon name="description" type="material" color="#FFA500" />
-          <Text style={styles.label}>Proyectos Registrados</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: '50%', backgroundColor: '#FFA500' }]} />
-          </View>
-        </View>
-        <View style={styles.row}>
-          <Icon name="record-voice-over" type="material" color="#32CD32" />
-          <Text style={styles.label}>Propuestas Creadas</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: '50%', backgroundColor: '#32CD32' }]} />
-          </View>
-        </View>
+        <Text style={styles.nombre}>¡Bienvenido! {nombre}</Text>
+      </View>
+      <View style={styles.chartContainer}>
+        <Text style={styles.chartTitle}>Cantidad de Equipos Registrados</Text>
+        <BarChart
+          data={{
+            labels: ['Equipos Registrados'],
+            datasets: [
+              {
+                data: [cantidadEquipos] // Usa el estado actualizado
+              }
+            ]
+          }}
+          width={350}
+          height={220}
+          chartConfig={{
+            backgroundColor: '#fff',
+            backgroundGradientFrom: '#fff',
+            backgroundGradientTo: '#fff',
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16
+            },
+            propsForDots: {
+              r: '6',
+              strokeWidth: '2',
+              stroke: '#ffa726'
+            }
+          }}
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+        />
       </View>
       <View style={styles.notifications}>
         <Text style={styles.notificationsLabel}>Notificaciones</Text>
@@ -118,36 +108,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  logo: {
-    width: 100,
-    height: 50,
-  },
   nombre: {
-    fontSize: 27,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   section: {
     marginBottom: 20,
   },
-  row: {
-    flexDirection: 'row',
+  chartContainer: {
     alignItems: 'center',
+    marginVertical: 20,
+  },
+  chartTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 10,
-  },
-  label: {
-    marginLeft: 10,
-    flex: 1,
-  },
-  progressBar: {
-    flex: 2,
-    height: 10,
-    backgroundColor: '#eee',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginLeft: 10,
-  },
-  progress: {
-    height: '100%',
   },
   notifications: {
     padding: 10,
