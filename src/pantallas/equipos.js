@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    marginBottom: 16,
+    marginBottom: 16, 
   },
   createButton: {
     backgroundColor: '#00CFFF',
