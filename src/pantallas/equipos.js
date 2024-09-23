@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import TeamCard from '../components/cards/cardEquipos';  // Importar el componente TeamCard
 import * as Constantes from '../../src/utils/Constantes';  // Asegúrate de tener las constantes donde defines la IP
 
@@ -7,14 +7,11 @@ const PropuestasScreen = ({ navigation }) => {
   const [propuestas, setPropuestas] = useState([]); // Estado para almacenar los equipos
   const ip = Constantes.IP; // Usa tu constante de IP
 
-  // Función para obtener los datos del PHP
   const obtenerPropuestas = async () => {
     try {
-      // Ajusta la URL para que coincida con tu estructura de peticiones
-      console.log("Fetching data from:", `${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`);
       const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`, {
         method: 'POST',
-        credentials: "include"
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -22,10 +19,10 @@ const PropuestasScreen = ({ navigation }) => {
       }
 
       const data = await response.json();
-      console.log("Response data:", data); // Log para ver los datos devueltos
+      console.log("Response data:", data);
 
       if (data.status === 1) {
-        setPropuestas(data.equipos);  // Actualiza el estado con los datos obtenidos
+        setPropuestas(data.dataset || []);  // Cambia a data.dataset
       } else {
         console.log("No se pudieron obtener los equipos. Status:", data.status);
       }
@@ -50,8 +47,7 @@ const PropuestasScreen = ({ navigation }) => {
               teamData={{
                 team_name: propuesta.equipo,              // ID del equipo
                 coordinator_name: propuesta.coordinador,  // Nombre del coordinador
-                members_count: propuesta.numero_integrantes,  // Número de integrantes
-                estado: propuesta.estado_equipo,          // Estado del equipo
+                members_count: propuesta.numero_integrantes  // Número de integrantes
               }}
             />
           ))

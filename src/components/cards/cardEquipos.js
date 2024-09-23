@@ -10,17 +10,16 @@ const TeamCard = ({ teamData }) => {
           style={styles.icon} 
         />
         <Text style={styles.title}>
-          {`Equipo: ${teamData.equipo}, Coordinador: ${teamData.coordinador}`}
+          {`Equipo: ${teamData.team_name}, Coordinador: ${teamData.coordinator_name}`}
         </Text>
       </View>
-      <Text style={styles.subtitle}>{`Integrantes: ${teamData.numero_integrantes}`}</Text>
+      <Text style={styles.subtitle}>{`Integrantes: ${teamData.members_count}`}</Text>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>VER MÁS</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
