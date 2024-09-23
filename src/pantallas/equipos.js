@@ -13,7 +13,8 @@ const PropuestasScreen = ({ navigation }) => {
       // Ajusta la URL para que coincida con tu estructura de peticiones
       console.log("Fetching data from:", `${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`);
       const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`, {
-        method: 'GET',
+        method: 'POST',
+        credentials: "include"
       });
 
       if (!response.ok) {
@@ -51,7 +52,6 @@ const PropuestasScreen = ({ navigation }) => {
                 coordinator_name: propuesta.coordinador,  // Nombre del coordinador
                 members_count: propuesta.numero_integrantes,  // Número de integrantes
                 estado: propuesta.estado_equipo,          // Estado del equipo
-                curso: propuesta.nombre_curso             // Nombre del curso
               }}
             />
           ))

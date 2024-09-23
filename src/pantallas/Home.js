@@ -5,6 +5,8 @@ import * as Constantes from '../../src/utils/Constantes';
 
 export default function Home({ navigation }) {
 
+  const [nombre, setNombre]=useState("")
+
   const ip = Constantes.IP;
 
   //Funcion para obtener el nombre del usuario
@@ -21,9 +23,10 @@ export default function Home({ navigation }) {
         const data = await response.json();
         console.log('Server response:', data);
 
+
         if (data.status) {
-            if (data.cliente && data.cliente.nombre_cliente) {
-                setNombre(data.cliente.nombre_cliente);
+            if (data.username) {
+                setNombre(data.username);
             } else {
                 setAlertTitle('Error');
                 setAlertMessage('La respuesta del servidor no contiene el nombre del profesor.');
@@ -69,8 +72,8 @@ useEffect(() => {
           <Icon name="logout" type="material" color="#000" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.welcomeText}>¡Bienvenido (nombre)!</Text>
       <View style={styles.section}>
+        <Text style={styles.nombre}>Bienvenido: {nombre}</Text>
         <View style={styles.row}>
           <Icon name="group" type="material" color="#FF4500" />
           <Text style={styles.label}>Equipos Registrados</Text>
@@ -117,10 +120,9 @@ const styles = StyleSheet.create({
     width: 100,
     height: 50,
   },
-  welcomeText: {
-    fontSize: 24,
+  nombre: {
+    fontSize: 27,
     fontWeight: 'bold',
-    marginBottom: 20,
   },
   section: {
     marginBottom: 20,
