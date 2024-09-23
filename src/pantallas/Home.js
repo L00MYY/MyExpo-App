@@ -72,30 +72,8 @@ useEffect(() => {
           <Icon name="logout" type="material" color="#000" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.welcomeText}>¡Bienvenido!</Text>
       <View style={styles.section}>
         <Text style={styles.nombre}>Bienvenido: {nombre}</Text>
-        <View style={styles.row}>
-          <Icon name="group" type="material" color="#FF4500" />
-          <Text style={styles.label}>Equipos Registrados</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: '50%', backgroundColor: '#FF4500' }]} />
-          </View>
-        </View>
-        <View style={styles.row}>
-          <Icon name="description" type="material" color="#FFA500" />
-          <Text style={styles.label}>Proyectos Registrados</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: '50%', backgroundColor: '#FFA500' }]} />
-          </View>
-        </View>
-        <View style={styles.row}>
-          <Icon name="record-voice-over" type="material" color="#32CD32" />
-          <Text style={styles.label}>Propuestas Creadas</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progress, { width: '50%', backgroundColor: '#32CD32' }]} />
-          </View>
-        </View>
       </View>
       <View style={styles.notifications}>
         <Text style={styles.notificationsLabel}>Notificaciones</Text>
@@ -123,7 +101,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   nombre: {
-    fontSize: 27,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   section: {
