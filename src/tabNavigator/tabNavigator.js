@@ -25,7 +25,7 @@ const TabNavigator = () => {
           } else if (route.name === 'Propuesta') {
             iconName = focused ? 'list' : 'list-outline';
           } else if (route.name === 'Equipos') {
-            iconName = focused ? 'list' : 'list-outline';
+            iconName = focused ? 'people' : 'people-outline';               
           } else if (route.name === 'Perfil') {
             iconName = focused ? 'person' : 'person-outline';
           }

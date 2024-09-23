@@ -109,7 +109,7 @@ export default function RecuperarClave({ navigation }) {
             <View style={styles.header}>
                 <Text style={styles.title}>Recuperación de contraseña</Text>
             </View>
-            <Text style={styles.registerText}>Ingresa tu carnet y te enviaremos un correo al correo.</Text>
+            <Text style={styles.registerText}>Ingresa tu correo y te enviaremos un codigo de verificación.</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Carnet"

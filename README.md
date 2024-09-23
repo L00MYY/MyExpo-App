@@ -41,3 +41,4 @@ npm install react-native-reanimated@~3.10.1
 npm install react-native-safe-area-context@4.10.1
 npm install react-native-screens@3.31.1
 npm install react-native-awesome-alerts
+ npm install react-native-elements
