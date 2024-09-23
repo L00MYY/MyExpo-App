@@ -69,7 +69,7 @@ useEffect(() => {
           <Icon name="logout" type="material" color="#000" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.welcomeText}>¡Bienvenido (nombre)!</Text>
+      <Text style={styles.welcomeText}>¡Bienvenido!</Text>
       <View style={styles.section}>
         <View style={styles.row}>
           <Icon name="group" type="material" color="#FF4500" />
@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+    padding: 5,
     alignItems: 'center',
     marginBottom: 20,
   },
