@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { Icon } from 'react-native-elements';
 import { useFocusEffect } from "@react-navigation/native";
 import AwesomeAlert from "react-native-awesome-alerts";
 import * as Constantes from "../utils/Constantes";
@@ -175,6 +176,9 @@ export default function Perfil({ navigation }) {
           setProfileData((prevData) => ({ ...prevData, correo_profesor: text }))
         }
       />
+        <TouchableOpacity onPress={handleLogout}>
+          <Icon name="logout" type="material" color="#000" />
+        </TouchableOpacity>
       <TouchableOpacity onPress={editProfile} style={styles.button}>
         <Text style={styles.buttonText}>GUARDAR PERFIL</Text>
       </TouchableOpacity>

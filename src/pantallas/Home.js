@@ -48,13 +48,9 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleLogout}>
-          <Icon name="logout" type="material" color="#000" />
-        </TouchableOpacity>
-      </View>
+      
       <View style={styles.section}>
-        <Text style={styles.nombre}>Bienvenido: {nombre}</Text>
+        <Text style={styles.nombre}>¡Bienvenido! {nombre}</Text>
       </View>
       <View style={styles.chartContainer}>
         <Text style={styles.chartTitle}>Cantidad de Equipos Registrados</Text>
