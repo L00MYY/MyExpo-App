@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import * as Constantes from '../../src/utils/Constantes';
