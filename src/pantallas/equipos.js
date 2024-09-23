@@ -41,7 +41,6 @@ const PropuestasScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Equipos PTC</Text>
-      <TextInput style={styles.input} placeholder="Curso:" />
       <ScrollView style={styles.scrollView}>
         {propuestas.length > 0 ? (
           propuestas.map((propuesta, index) => (
@@ -60,9 +59,6 @@ const PropuestasScreen = ({ navigation }) => {
           <Text>No hay equipos disponibles</Text>
         )}
       </ScrollView>
-      <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('DetalleEquipo')}>
-        <Text style={styles.createButtonText}>Crear Equipo</Text>
-      </TouchableOpacity>
     </View>
   );
 };
