@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const TeamCard = ({ teamData, onPress }) => {
+const ProposalCard = ({ proposalData, onPress }) => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -10,10 +10,10 @@ const TeamCard = ({ teamData, onPress }) => {
           style={styles.icon} 
         />
         <Text style={styles.title}>
-          {`Equipo: ${teamData.team_name}, Coordinador: ${teamData.coordinator_name}`}
+          {`Propuesta: ${proposalData.nombre_propuesta}`}
         </Text>
       </View>
-      <Text style={styles.subtitle}>{`Integrantes: ${teamData.members_count}`}</Text>
+      <Text style={styles.subtitle}>{`Descripción: ${proposalData.descripcion}`}</Text>
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>VER MÁS</Text>
       </TouchableOpacity>
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TeamCard;
+export default ProposalCard;

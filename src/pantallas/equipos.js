@@ -1,40 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import TeamCard from '../components/cards/cardEquipos';  // Importar el componente TeamCard
-import * as Constantes from '../../src/utils/Constantes';  // Asegúrate de tener las constantes donde defines la IP
+import TeamCard from '../components/cards/cardEquipos';  
+import TeamDetailsModal from '../components/modals/detalleEquipo'; // Import the modal
+import * as Constantes from '../../src/utils/Constantes'; 
 
 const PropuestasScreen = ({ navigation }) => {
-  const [propuestas, setPropuestas] = useState([]); // Estado para almacenar los equipos
-  const ip = Constantes.IP; // Usa tu constante de IP
+  const [propuestas, setPropuestas] = useState([]); 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const ip = Constantes.IP; 
 
   const obtenerPropuestas = async () => {
     try {
       const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`, {
         method: 'POST',
-        credentials: "include",
+        credentials: 'include',
       });
-
+  
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Error HTTP! status: ${response.status}`);
       }
-
+  
       const data = await response.json();
-      console.log("Response data:", data);
-
+      console.log("Datos de la respuesta:", data); // Verifica la estructura de los datos
+  
       if (data.status === 1) {
-        setPropuestas(data.dataset || []);  // Cambia a data.dataset
+        setPropuestas(data.dataset || []);
       } else {
         console.log("No se pudieron obtener los equipos. Status:", data.status);
       }
     } catch (error) {
       console.error("Error al obtener los equipos:", error);
     }
-  };
+  };  
 
-  // useEffect para ejecutar la función obtenerPropuestas al cargar el componente
   useEffect(() => {
     obtenerPropuestas();
-  }, []); // [] asegura que se ejecute solo una vez al montar el componente
+  }, []);
+
+  const openModal = (teamData) => {
+    setSelectedTeam(teamData);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedTeam(null);
+  };
 
   return (
     <View style={styles.container}>
@@ -45,19 +57,30 @@ const PropuestasScreen = ({ navigation }) => {
             <TeamCard
               key={index}
               teamData={{
-                team_name: propuesta.equipo,              // ID del equipo
-                coordinator_name: propuesta.coordinador,  // Nombre del coordinador
-                members_count: propuesta.numero_integrantes  // Número de integrantes
+                team_name: propuesta.equipo,
+                coordinator_name: propuesta.coordinador,
+                members_count: propuesta.numero_integrantes
               }}
+              onPress={() => openModal({
+                team_name: propuesta.equipo,
+                coordinator_name: propuesta.coordinador,
+                members_count: propuesta.numero_integrantes
+              })} // Pass the data to the modal
             />
           ))
         ) : (
           <Text>No hay equipos disponibles</Text>
         )}
       </ScrollView>
+      <TeamDetailsModal 
+        visible={modalVisible} 
+        onClose={closeModal} 
+        teamData={selectedTeam} 
+      />
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

@@ -1,104 +1,84 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, FlatList, Text, Alert } from 'react-native';
+import ProposalCard from './ProposalCard'; // Asegúrate de que esta ruta sea correcta
+import * as Constantes from '../../src/utils/Constantes';
 
+const PropuestasScreen = ({ navigation }) => {
+    const ip = Constantes.IP;
 
-export default function PropuestasScreen({ navigation }) {
-  const propuestas = [
-    { nombre: 'Proyecto 1', descripcion: 'Proyecto se basa en realizar....' },
-    { nombre: 'Proyecto 2', descripcion: 'Proyecto se basa en realizar....' },
-  ];
+    const [propuestas, setPropuestas] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Propuestas</Text>
-      <TextInput style={styles.input} placeholder="Tipo:" />
-      <ScrollView style={styles.scrollView}>
-        {propuestas.map((propuesta, index) => (
-          <View key={index} style={styles.card}>
-            <Text style={styles.cardTitle}>Nombre: {propuesta.nombre}</Text>
-            <Text style={styles.cardDescription}>Descripción: {propuesta.descripcion}</Text>
-            <TouchableOpacity style={styles.editButton} onPress={() => {}}>
-              <Text style={styles.editButtonText}>Editar</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
-      <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('CrearPropuesta')}>
-        <Text style={styles.createButtonText}>Crear Propuesta</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    // Función para obtener las propuestas
+    const fetchPropuestas = async () => {
+        try {
+            const response = await fetch(`${ip}/expo24/api/services/servicePropuestas/propuesta.php?action=readAll`, {
+                method: 'GET',
+            });
+
+            const data = await response.json();
+            if (data.status) {
+                setPropuestas(data.propuestas); // Asegúrate de que esta sea la estructura correcta
+            } else {
+                Alert.alert('Error', 'No se pudieron cargar las propuestas');
+            }
+        } catch (error) {
+            console.error(error);
+            Alert.alert('Error', 'Ocurrió un error al cargar las propuestas');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchPropuestas();
+    }, []);
+
+    const renderItem = ({ item }) => (
+        <ProposalCard
+            proposalData={item}
+            onPress={() => handleViewMore(item)}
+        />
+    );
+
+    const handleViewMore = (proposal) => {
+        // Manejar la navegación o mostrar detalles
+        console.log('Detalles de la propuesta:', proposal);
+        navigation.navigate('ProposalDetail', { proposal }); // Cambia 'ProposalDetail' según tu configuración
+    };
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <Text style={styles.loadingText}>Cargando propuestas...</Text>
+            </View>
+        );
+    }
+
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={propuestas}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id_propuesta.toString()}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-  },
-  scrollView: {
-    flex: 1,
-    marginBottom: 16,
-  },
-  card: {
-    padding: 16,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 2,
-    position: 'relative',
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  cardDescription: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 16,
-  },
-  editButton: {
-    position: 'absolute',
-    right: 16,
-    bottom: 18,
-    backgroundColor: '#007BFF',
-    paddingVertical: 4,
-    paddingHorizontal: 14,
-    borderRadius: 4,
-  },
-  editButtonText: {
-    color: '#fff',
-    fontSize: 14,
-  },
-  createButton: {
-    backgroundColor: '#00CFFF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 4,
-    alignSelf: 'center',
-  },
-  createButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
+    container: {
+        flex: 1,
+        padding: 20,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingText: {
+        fontSize: 18,
+    },
 });
 
-
+export default PropuestasScreen;
