@@ -57,7 +57,7 @@ const PropuestasScreen = ({ navigation }) => {
             propuestas.map((propuesta, index) => (
               <ProposalCard
                 key={index}
-                teamData={{
+                proposalData={{
                     nombre: propuesta.nombre_propuesta,
                     descripcion: propuesta.descripcion_propuesta
                 }}
