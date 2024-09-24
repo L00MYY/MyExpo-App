@@ -12,7 +12,7 @@ const PropuestasScreen = ({ navigation }) => {
     // Función para obtener las propuestas
     const fetchPropuestas = async () => {
         try {
-            const response = await fetch(`${ip}/expo24/api/services/servicePropuestas/propuesta.php?action=readAll`, {
+            const response = await fetch(`${ip}/expo24/api/services/serviceAdministracion/propuestasService.php?action=readAll`, {
                 method: 'GET',
             });
 

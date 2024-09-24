@@ -81,11 +81,11 @@ export default function Perfil({ navigation }) {
     }, [])
   );
 
-  // Funcion para cerrar sesion
+  // Funcion para cerrar sesion de boton
   const handleLogout = async () => {
     try {
       const response = await fetch(
-        `${ip}/services/public/cliente.php?action=logOut`,
+        `${ip}/expo24/api/services/serviceProfesores/profesor.php?action=logOut`,
         {
           method: "GET",
         }
@@ -95,7 +95,7 @@ export default function Perfil({ navigation }) {
         showAlert("Éxito", "Has cerrado sesión exitosamente.", "success");
         setTimeout(() => {
           hideAlert();
-          navigation.navigate("Sesion");
+          navigation.navigate("Login");
         }, 2000);
       } else {
         showAlert("Error", "Error al cerrar sesión.", "error");
@@ -104,6 +104,7 @@ export default function Perfil({ navigation }) {
       showAlert("Error de red", "Ocurrió un error de red.", "error");
     }
   };
+
 
   const handleTextChange = (text) => {
     let formatted = text.replace(/[^\d]/g, ""); // Elimina todos los caracteres no numéricos.
