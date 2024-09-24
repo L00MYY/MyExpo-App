@@ -36,7 +36,7 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
           ) : (
             <Text>No hay datos disponibles</Text>
           )}
-          <Button title="Cerrar" onPress={onClose} />
+          <Button title="Cerrar" style={styles.cerrarbtn}onPress={onClose} />
         </View>
       </View>
     </Modal>

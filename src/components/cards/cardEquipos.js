@@ -15,7 +15,7 @@ const TeamCard = ({ teamData, onPress }) => {
       </View>
       <Text style={styles.subtitle}>{`Integrantes: ${teamData.members_count}`}</Text>
       <TouchableOpacity style={styles.button} onPress={onPress}>
-        <Text style={styles.buttonText}>VER MÁS</Text>
+        <Text style={styles.buttonText}>VER DETALLES</Text>
       </TouchableOpacity>
     </View>
   );
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#00bfff',
+    backgroundColor: '#16C172',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
