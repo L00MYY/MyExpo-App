@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const ProposalCard = ({ proposalData, onPress }) => {
+const ProposalCard = ({ proposalData }) => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -10,13 +10,10 @@ const ProposalCard = ({ proposalData, onPress }) => {
           style={styles.icon} 
         />
         <Text style={styles.title}>
-          {`Propuesta: ${proposalData.nombre_propuesta}`}
+          {`Propuesta: ${proposalData.nombre}`}
         </Text>
       </View>
       <Text style={styles.subtitle}>{`Descripción: ${proposalData.descripcion}`}</Text>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
-        <Text style={styles.buttonText}>VER MÁS</Text>
-      </TouchableOpacity>
     </View>
   );
 };

@@ -12,6 +12,33 @@ export default function Home({ navigation }) {
 
   const getUser = async () => {
     // Código existente para obtener el nombre del usuario...
+    try {
+      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getUser`, {
+          method: 'GET'
+      });
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('Server response:', data);
+      if (data.status) {
+          if (data.username) {
+              setNombre(data.username);
+          } else {
+              setAlertTitle('Error');
+              setAlertMessage('La respuesta del servidor no contiene el nombre del profesor.');
+              setShowAlert(true);
+          }
+      } else {
+          setAlertTitle('Error');
+          setAlertMessage(data.error || 'Error desconocido del servidor.');
+          setShowAlert(true);
+      }
+  } catch (error) {
+      setAlertTitle('Error');
+      setAlertMessage(`Ocurrió un error al obtener los datos del usuario: ${error.message}`);
+      setShowAlert(true);
+  }
   };
 
   const getEquipos = async () => {

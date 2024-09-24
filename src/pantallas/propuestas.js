@@ -38,7 +38,7 @@ const PropuestasScreen = ({ navigation }) => {
     obtenerPropuestas();
   }, []);
 
-  const openModal = (teamData) => {
+  /*const openModal = (teamData) => {
     setSelectedTeam(teamData);
     setModalVisible(true);
   };
@@ -46,11 +46,11 @@ const PropuestasScreen = ({ navigation }) => {
   const closeModal = () => {
     setModalVisible(false);
     setSelectedTeam(null);
-  };
+  };*/
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Equipos PTC</Text>
+      <Text style={styles.title}>Propuesta PTC</Text>
       <ScrollView style={styles.scrollView}>
         <View style={styles.cardContainer}>
           {propuestas.length > 0 ? (
@@ -58,27 +58,21 @@ const PropuestasScreen = ({ navigation }) => {
               <ProposalCard
                 key={index}
                 teamData={{
-                  team_name: propuesta.equipo,
-                  coordinator_name: propuesta.coordinador,
-                  members_count: propuesta.numero_integrantes
+                    nombre: propuesta.nombre_propuesta,
+                    descripcion: propuesta.descripcion_propuesta
                 }}
-                onPress={() => openModal({
-                  team_name: propuesta.equipo,
-                  coordinator_name: propuesta.coordinador,
-                  members_count: propuesta.numero_integrantes
-                })}
               />
             ))
           ) : (
-            <Text>No hay equipos disponibles</Text>
+            <Text>No hay propuesta disponibles</Text>
           )}
         </View>
       </ScrollView>
-      <TeamDetailsModal
+      {/*<TeamDetailsModal
         visible={modalVisible}
         onClose={closeModal}
         teamData={selectedTeam}
-      />
+      />*/}
     </View>
   );
 };
@@ -86,16 +80,33 @@ const PropuestasScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-    },
-    loadingContainer: {
+        padding: 16,
+        backgroundColor: '#fff',
+      },
+      title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginVertical: 16,
+        textAlign: 'center',
+      },
+      scrollView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loadingText: {
-        fontSize: 18,
-    },
+        marginBottom: 16,
+      },
+      cardContainer: {
+        alignItems: 'center', // Centra las cards en la pantalla
+      },
+      createButton: {
+        backgroundColor: '#00CFFF',
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 4,
+        alignSelf: 'center',
+      },
+      createButtonText: {
+        color: '#fff',
+        fontSize: 16,
+      },
 });
 
 export default PropuestasScreen;
