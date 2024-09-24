@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Modal, Button, StyleSheet } from 'react-native';
+import { View, Text, Modal, Button, StyleSheet, FlatList } from 'react-native';
 
 const TeamDetailsModal = ({ visible, onClose, teamData }) => {
   return (
@@ -15,7 +15,23 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
             <>
               <Text style={styles.title}>{`Detalles del Equipo: ${teamData.team_name}`}</Text>
               <Text>{`Coordinador: ${teamData.coordinator_name}`}</Text>
-              <Text>{`Integrantes: ${teamData.members_count}`}</Text>
+              <Text>{`Número de integrantes: ${teamData.members_count}`}</Text>
+
+              {/* Mostrar lista de integrantes */}
+              {teamData.integrantes && teamData.integrantes.length > 0 ? (
+                <>
+                  <Text style={styles.subtitle}>Integrantes:</Text>
+                  <FlatList
+                    data={teamData.integrantes}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                      <Text style={styles.memberText}>{item.nombre_alumno}</Text>
+                    )}
+                  />
+                </>
+              ) : (
+                <Text>No hay integrantes disponibles</Text>
+              )}
             </>
           ) : (
             <Text>No hay datos disponibles</Text>
@@ -45,6 +61,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 5,
+    fontWeight: 'bold',
+  },
+  memberText: {
+    fontSize: 14,
+    marginVertical: 2,
   },
 });
 

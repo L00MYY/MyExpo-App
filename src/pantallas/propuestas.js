@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, Text, Alert } from 'react-native';
-import ProposalCard from './ProposalCard'; // Asegúrate de que esta ruta sea correcta
+import ProposalCard from '../components/cards/cardEquipos'; // Asegúrate de que esta ruta sea correcta
 import * as Constantes from '../../src/utils/Constantes';
 
 const PropuestasScreen = ({ navigation }) => {
