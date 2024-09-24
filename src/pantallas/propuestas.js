@@ -1,69 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Text, Alert } from 'react-native';
-import ProposalCard from '../components/cards/cardEquipos'; // Asegúrate de que esta ruta sea correcta
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import ProposalCard from '../components/cards/cardPropuesta'; // Asegúrate de que esta ruta sea correcta
 import * as Constantes from '../../src/utils/Constantes';
+import TeamDetailsModal from '../components/modals/detalleEquipo';
 
 const PropuestasScreen = ({ navigation }) => {
-    const ip = Constantes.IP;
-
     const [propuestas, setPropuestas] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const ip = Constantes.IP;
 
-    // Función para obtener las propuestas
-    const fetchPropuestas = async () => {
-        try {
-            const response = await fetch(`${ip}/expo24/api/services/serviceAdministracion/propuestasService.php?action=readAll`, {
-                method: 'GET',
-            });
+  const obtenerPropuestas = async () => {
+    try {
+      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readPropuestasProfesor`, {
+        method: 'POST',
+        credentials: 'include',
+      });
 
-            const data = await response.json();
-            if (data.status) {
-                setPropuestas(data.propuestas); // Asegúrate de que esta sea la estructura correcta
-            } else {
-                Alert.alert('Error', 'No se pudieron cargar las propuestas');
-            }
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'Ocurrió un error al cargar las propuestas');
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (!response.ok) {
+        throw new Error(`Error HTTP! status: ${response.status}`);
+      }
 
-    useEffect(() => {
-        fetchPropuestas();
-    }, []);
+      const data = await response.json();
+      console.log("Datos de la respuesta:", data);
 
-    const renderItem = ({ item }) => (
-        <ProposalCard
-            proposalData={item}
-            onPress={() => handleViewMore(item)}
-        />
-    );
-
-    const handleViewMore = (proposal) => {
-        // Manejar la navegación o mostrar detalles
-        console.log('Detalles de la propuesta:', proposal);
-        navigation.navigate('ProposalDetail', { proposal }); // Cambia 'ProposalDetail' según tu configuración
-    };
-
-    if (loading) {
-        return (
-            <View style={styles.loadingContainer}>
-                <Text style={styles.loadingText}>Cargando propuestas...</Text>
-            </View>
-        );
+      if (data.status === 1) {
+        setPropuestas(data.dataset || []);
+      } else {
+        console.log("No se pudieron obtener los equipos. Status:", data.status);
+      }
+    } catch (error) {
+      console.error("Error al obtener los equipos:", error);
     }
+  };
 
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={propuestas}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id_propuesta.toString()}
-            />
+  useEffect(() => {
+    obtenerPropuestas();
+  }, []);
+
+  const openModal = (teamData) => {
+    setSelectedTeam(teamData);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedTeam(null);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Equipos PTC</Text>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.cardContainer}>
+          {propuestas.length > 0 ? (
+            propuestas.map((propuesta, index) => (
+              <ProposalCard
+                key={index}
+                teamData={{
+                  team_name: propuesta.equipo,
+                  coordinator_name: propuesta.coordinador,
+                  members_count: propuesta.numero_integrantes
+                }}
+                onPress={() => openModal({
+                  team_name: propuesta.equipo,
+                  coordinator_name: propuesta.coordinador,
+                  members_count: propuesta.numero_integrantes
+                })}
+              />
+            ))
+          ) : (
+            <Text>No hay equipos disponibles</Text>
+          )}
         </View>
-    );
+      </ScrollView>
+      <TeamDetailsModal
+        visible={modalVisible}
+        onClose={closeModal}
+        teamData={selectedTeam}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
