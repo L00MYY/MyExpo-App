@@ -21,7 +21,7 @@ const ProposalCard = ({ proposalData }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 8,
     padding: 20,
     alignItems: 'center',
     shadowColor: '#000',
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
-    width: 300,
+    width: 280,
     marginVertical: 10,
   },
   header: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   subtitle: {
