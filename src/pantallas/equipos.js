@@ -10,6 +10,7 @@ const PropuestasScreen = ({ navigation }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const ip = Constantes.IP;
 
+  // Función para obtener las propuestas
   const obtenerPropuestas = async () => {
     try {
       const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`, {
@@ -34,14 +35,51 @@ const PropuestasScreen = ({ navigation }) => {
     }
   };
 
+  const obtenerIntegrantes = async (equipoId) => {
+    try {
+        const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readIntegrantesPorEquipo`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ equipoId }), // Asegúrate de que aquí estás enviando el equipoId
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error HTTP! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Integrantes del equipo:", data);
+
+        return data.status === 1 ? data.dataset : []; // Devuelve los integrantes si existen
+    } catch (error) {
+        console.error("Error al obtener los integrantes:", error);
+        return [];
+    }
+};
+
   useEffect(() => {
     obtenerPropuestas();
   }, []);
 
-  const openModal = (teamData) => {
-    setSelectedTeam(teamData);
-    setModalVisible(true);
-  };
+  // Abre el modal y carga los integrantes
+  const openModal = async (teamData) => {
+		try {
+			const integrantes = await obtenerIntegrantes(teamData.team_id); // Aquí pasamos el ID del equipo
+	
+			// Incluimos los integrantes en los datos del equipo antes de abrir el modal
+			setSelectedTeam({
+				...teamData,
+				integrantes,  // Aquí guardamos los integrantes
+			});
+			setModalVisible(true);
+		} catch (error) {
+			console.error('Error al abrir el modal:', error.message);
+		}
+	};
+	
 
   const closeModal = () => {
     setModalVisible(false);
@@ -58,14 +96,16 @@ const PropuestasScreen = ({ navigation }) => {
               <TeamCard
                 key={index}
                 teamData={{
+                  team_id: propuesta.equipo,  // ID del equipo
                   team_name: propuesta.equipo,
                   coordinator_name: propuesta.coordinador,
-                  members_count: propuesta.numero_integrantes
+                  members_count: propuesta.numero_integrantes,
                 }}
                 onPress={() => openModal({
+                  team_id: propuesta.equipo,  // Aquí pasamos el ID del equipo
                   team_name: propuesta.equipo,
                   coordinator_name: propuesta.coordinador,
-                  members_count: propuesta.numero_integrantes
+                  members_count: propuesta.numero_integrantes,
                 })}
               />
             ))
@@ -100,18 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   cardContainer: {
-    alignItems: 'center', // Centra las cards en la pantalla
-  },
-  createButton: {
-    backgroundColor: '#00CFFF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 4,
-    alignSelf: 'center',
-  },
-  createButtonText: {
-    color: '#fff',
-    fontSize: 16,
+    alignItems: 'center',
   },
 });
 

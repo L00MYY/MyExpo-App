@@ -23,7 +23,7 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
                   <Text style={styles.subtitle}>Integrantes:</Text>
                   <FlatList
                     data={teamData.integrantes}
-                    keyExtractor={(item, index) => index.toString()}
+                    keyExtractor={(item) => item.id_alumno.toString()} // Cambia a un ID único si lo tienes
                     renderItem={({ item }) => (
                       <Text style={styles.memberText}>{item.nombre_alumno}</Text>
                     )}
@@ -36,7 +36,7 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
           ) : (
             <Text>No hay datos disponibles</Text>
           )}
-          <Button title="Cerrar" style={styles.cerrarbtn}onPress={onClose} />
+          <Button title="Cerrar" onPress={onClose} />
         </View>
       </View>
     </Modal>
