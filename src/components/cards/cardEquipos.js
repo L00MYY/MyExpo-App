@@ -10,10 +10,10 @@ const TeamCard = ({ teamData, onPress }) => {
           style={styles.icon} 
         />
         <Text style={styles.title}>
-          {`Equipo: ${teamData.team_name}, Coordinador: ${teamData.coordinator_name}`}
+          {`Equipo: ${teamData.equipo}, Coordinador: ${teamData.coordinador}`}
         </Text>
       </View>
-      <Text style={styles.subtitle}>{`Integrantes: ${teamData.members_count}`}</Text>
+      <Text style={styles.subtitle}>{`Integrantes: ${teamData.numero_integrantes}`}</Text>
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>VER DETALLES</Text>
       </TouchableOpacity>
