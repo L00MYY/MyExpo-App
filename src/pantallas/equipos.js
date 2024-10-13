@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import TeamCard from '../components/cards/cardEquipos';
-import TeamDetailsModal from '../components/modals/detalleEquipo';
+import IntegrantesModal from '../components/modals/IntegrantesModal';
+import PropuestasModal from '../components/modals/PropuestasModal';
 import * as Constantes from '../../src/utils/Constantes';
 
 const EquiposScreen = ({ navigation }) => {
     const [equipos, setEquipos] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedTeam, setSelectedTeam] = useState(null);
+    const [integrantesModalVisible, setIntegrantesModalVisible] = useState(false);
+    const [propuestasModalVisible, setPropuestasModalVisible] = useState(false);
+    const [selectedIntegrantes, setSelectedIntegrantes] = useState([]);
+    const [selectedPropuestas, setSelectedPropuestas] = useState([]);
+
     const ip = Constantes.IP;
 
     // Función para obtener los equipos asociados al profesor
@@ -36,15 +40,50 @@ const EquiposScreen = ({ navigation }) => {
         }
     };
 
-    // Función para abrir el modal con detalles del equipo seleccionado
-    const openModal = async (teamData) => {
-        setSelectedTeam(teamData);
-        setModalVisible(true);
+    const obtenerIntegrantesPorEquipo = async (equipoId) => {
+        console.log("Obteniendo integrantes para el equipo:", equipoId); // Log
+        try {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readIntegrantesPorEquipo`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `equipoId=${equipoId}`,
+            });
+            const data = await response.json();
+            if (data.status === 1) {
+                setSelectedIntegrantes(data.dataset);
+                setIntegrantesModalVisible(true); // Verifica que se ejecute esta línea
+            }
+        } catch (error) {
+            console.error("Error al obtener los integrantes:", error);
+        }
     };
 
-    const closeModal = () => {
-        setModalVisible(false);
-        setSelectedTeam(null);
+    const obtenerPropuestasPorEquipo = async (equipoId) => {
+        try {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readPropuestasPorEquipo`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `equipoId=${equipoId}`,
+            });
+            const data = await response.json();
+            if (data.status === 1) {
+                setSelectedPropuestas(data.dataset);
+                setPropuestasModalVisible(true); // Verifica que se ejecute esta línea
+            }
+        } catch (error) {
+            console.error("Error al obtener las propuestas:", error);
+        }
+    };
+
+    // Funciones para cerrar los modales
+    const closeIntegrantesModal = () => {
+        setIntegrantesModalVisible(false);
+        setSelectedIntegrantes([]);
+    };
+
+    const closePropuestasModal = () => {
+        setPropuestasModalVisible(false);
+        setSelectedPropuestas([]);
     };
 
     useEffect(() => {
@@ -54,21 +93,29 @@ const EquiposScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                {equipos.length > 0 ? ( // Verifica si hay elementos en el array
+                {equipos.length > 0 ? (
                     equipos.map((equipoItem) => (
-                        <TouchableOpacity key={equipoItem.id_equipo} onPress={() => openModal(equipoItem)}>
-                            <TeamCard teamData={equipoItem} /> 
-                        </TouchableOpacity>
+                        <TeamCard
+                            key={equipoItem.id_equipo}
+                            teamData={equipoItem}
+                            onPressIntegrantes={() => obtenerIntegrantesPorEquipo(equipoItem.id_equipo)}
+                            onPressPropuestas={() => obtenerPropuestasPorEquipo(equipoItem.id_equipo)}
+                        />
                     ))
                 ) : (
                     <Text>No se encontraron equipos.</Text>
                 )}
             </ScrollView>
 
-            <TeamDetailsModal
-                visible={modalVisible}
-                onClose={closeModal}
-                teamData={selectedTeam}
+            <IntegrantesModal
+                visible={integrantesModalVisible}
+                onClose={closeIntegrantesModal}
+                integrantes={selectedIntegrantes}
+            />
+            <PropuestasModal
+                visible={propuestasModalVisible}
+                onClose={closePropuestasModal}
+                propuestas={selectedPropuestas}
             />
         </View>
     );
