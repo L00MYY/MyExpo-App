@@ -2,6 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const TeamCard = ({ teamData, onPress }) => {
+  // Verificación para asegurarse de que teamData no sea undefined
+  if (!teamData) {
+    return null; // No renderizar la tarjeta si no hay datos
+  }
+
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -10,12 +15,16 @@ const TeamCard = ({ teamData, onPress }) => {
           style={styles.icon} 
         />
         <Text style={styles.title}>
-          {`Equipo: ${teamData.equipo}, Coordinador: ${teamData.coordinador}`}
+          {`Equipo: ${teamData.nombre_equipo_correlativo}, Coordinador: ${teamData.nombre_coordinador}`}
         </Text>
       </View>
-      <Text style={styles.subtitle}>{`Integrantes: ${teamData.numero_integrantes}`}</Text>
+      <Text style={styles.subtitle}>{`Integrantes: ${teamData.cantidad_integrantes}`}</Text>
+      <Text style={styles.subtitle}>{`${teamData.proyecto_seleccionado}`}</Text>
       <TouchableOpacity style={styles.button} onPress={onPress}>
-        <Text style={styles.buttonText}>VER DETALLES</Text>
+        <Text style={styles.buttonText}>Ver integrantes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <Text style={styles.buttonText}>Ver propuesta del equipo</Text>
       </TouchableOpacity>
     </View>
   );
@@ -25,24 +34,21 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 2,
-    width: 300,
+    padding: 15,
     marginVertical: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 5,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 30,
+    height: 30,
     marginRight: 10,
   },
   title: {
@@ -50,20 +56,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subtitle: {
+    marginTop: 5,
     fontSize: 14,
     color: '#666',
-    marginBottom: 20,
   },
   button: {
-    backgroundColor: '#16C172',
+    backgroundColor: '#007BFF',
     paddingVertical: 10,
-    paddingHorizontal: 20,
     borderRadius: 5,
+    marginTop: 10,
   },
   buttonText: {
     color: '#fff',
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 16,
   },
 });
 
