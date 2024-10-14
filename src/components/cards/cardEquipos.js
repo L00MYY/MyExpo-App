@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const TeamCard = ({ teamData, onPress }) => {
-  // Verificación para asegurarse de que teamData no sea undefined
+const TeamCard = ({ teamData, onPressIntegrantes, onPressPropuestas }) => {
   if (!teamData) {
-    return null; // No renderizar la tarjeta si no hay datos
+    return null;
   }
 
   return (
@@ -20,10 +19,10 @@ const TeamCard = ({ teamData, onPress }) => {
       </View>
       <Text style={styles.subtitle}>{`Integrantes: ${teamData.cantidad_integrantes}`}</Text>
       <Text style={styles.subtitle}>{`${teamData.proyecto_seleccionado}`}</Text>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity style={styles.button} onPress={onPressIntegrantes}>
         <Text style={styles.buttonText}>Ver integrantes</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity style={styles.button} onPress={onPressPropuestas}>
         <Text style={styles.buttonText}>Ver propuesta del equipo</Text>
       </TouchableOpacity>
     </View>
