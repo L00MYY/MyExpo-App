@@ -21,13 +21,13 @@ const EquiposScreen = ({ navigation }) => {
                 method: 'POST',
                 credentials: 'include',
             });
-
+    
             if (!response.ok) {
                 throw new Error(`Error HTTP! status: ${response.status}`);
             }
-
+    
             const data = await response.json();
-
+    
             if (data.status === 1) {
                 setEquipos(data.dataset); // Guarda los equipos obtenidos
             } else {
@@ -46,7 +46,7 @@ const EquiposScreen = ({ navigation }) => {
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readIntegrantesPorEquipo`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `equipoId=${equipoId}`,
+                body: `equipoId=${equipoId}`, // Asegúrate de pasar el body de la manera correcta
             });
             const data = await response.json();
             if (data.status === 1) {
@@ -64,7 +64,7 @@ const EquiposScreen = ({ navigation }) => {
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readPropuestasPorEquipo`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `equipoId=${equipoId}`,
+                body: `equipoId=${equipoId}`, // Aquí también corrige la interpolación
             });
             const data = await response.json();
             

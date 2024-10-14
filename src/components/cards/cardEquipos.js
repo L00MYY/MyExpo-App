@@ -14,11 +14,11 @@ const TeamCard = ({ teamData, onPressIntegrantes, onPressPropuestas }) => {
           style={styles.icon} 
         />
         <Text style={styles.title}>
-          {`Equipo: ${teamData.nombre_equipo_correlativo}, Coordinador: ${teamData.nombre_coordinador}`}
+          Equipo: {teamData.nombre_equipo_correlativo}, Coordinador: {teamData.nombre_coordinador}
         </Text>
       </View>
-      <Text style={styles.subtitle}>{`Integrantes: ${teamData.cantidad_integrantes}`}</Text>
-      <Text style={styles.subtitle}>{`${teamData.proyecto_seleccionado}`}</Text>
+      <Text style={styles.subtitle}>Integrantes: {teamData.cantidad_integrantes}</Text>
+      <Text style={styles.subtitle}>{teamData.proyecto_seleccionado}</Text>
       <TouchableOpacity style={styles.button} onPress={onPressIntegrantes}>
         <Text style={styles.buttonText}>Ver integrantes</Text>
       </TouchableOpacity>
