@@ -43,7 +43,7 @@ export default function Home({ navigation }) {
 
   const getEquipos = async () => {
     try {
-      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getPropuestasPorEstadoGrafico`, {
+      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=getChartData`, {
         method: 'GET'
       });
 
