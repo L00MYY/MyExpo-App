@@ -97,8 +97,8 @@ export default function Home({ navigation }) {
             backgroundGradientFrom: '#fff',
             backgroundGradientTo: '#fff',
             decimalPlaces: 0,
-            color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            color: (opacity = 2) => `rgba(0, 122, 255, ${opacity})`,
+            labelColor: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
             style: {
               borderRadius: 16
             },
@@ -113,10 +113,6 @@ export default function Home({ navigation }) {
             borderRadius: 16
           }}
         />
-      </View>
-      <View style={styles.notifications}>
-        <Text style={styles.notificationsLabel}>Notificaciones</Text>
-        <Text style={styles.notification}>+ Nuevo Equipo Creado</Text>
       </View>
     </View>
   );
@@ -150,17 +146,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-  },
-  notifications: {
-    padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 5,
-  },
-  notificationsLabel: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  notification: {
-    marginLeft: 10,
   },
 });
