@@ -3,6 +3,7 @@ import React from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
 const PropuestasModal = ({ visible, onClose, propuestas }) => {
+    console.log("Propuestas recibidas por el modal:", propuestas); // Verifica qué propuestas se están pasando al modal
     return (
         <Modal visible={visible} transparent={true} animationType="slide">
             <View style={styles.modalOverlay}>
