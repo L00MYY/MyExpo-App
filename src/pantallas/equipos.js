@@ -59,6 +59,7 @@ const EquiposScreen = ({ navigation }) => {
     };
 
     const obtenerPropuestasPorEquipo = async (equipoId) => {
+        console.log("Obteniendo propuestas para el equipo:", equipoId);
         try {
             const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readPropuestasPorEquipo`, {
                 method: 'POST',
@@ -66,14 +67,21 @@ const EquiposScreen = ({ navigation }) => {
                 body: `equipoId=${equipoId}`,
             });
             const data = await response.json();
+            
+            console.log("Respuesta completa de la API:", data); // Nuevo log para ver la respuesta completa
+            
             if (data.status === 1) {
                 setSelectedPropuestas(data.dataset);
-                setPropuestasModalVisible(true); // Verifica que se ejecute esta línea
+                console.log("Propuestas almacenadas en el estado:", data.dataset); // Este log debería aparecer si todo funciona correctamente
+                setPropuestasModalVisible(true);
+            } else {
+                console.log("No se encontraron propuestas. Mensaje de la API:", data.message); // Si el status no es 1, imprime el mensaje de la API
             }
         } catch (error) {
             console.error("Error al obtener las propuestas:", error);
         }
     };
+    
 
     // Funciones para cerrar los modales
     const closeIntegrantesModal = () => {
