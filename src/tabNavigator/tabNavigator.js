@@ -4,7 +4,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 // Importa tus componentes de pantalla aquí
 import Home from '../pantallas/Home';
-import Propuesta from '../pantallas/propuestas';
 import Equipo from '../pantallas/equipos';
 import Perfil from '../pantallas/Perfil';
 
@@ -37,11 +36,6 @@ const TabNavigator = () => {
         name="Home"
         component={Home}
         options={{ title: 'Home' }}
-      />
-      <Tab.Screen
-        name="Propuesta"
-        component={Propuesta}
-        options={{ title: 'Propuesta' }}
       />
       <Tab.Screen
         name="Equipos"

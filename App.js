@@ -11,7 +11,6 @@ import Propuesta from './src/pantallas/propuestas';
 import CambiarContra from './src/pantallas/cambiarContraseña';
 import RecuperarContra from './src/pantallas/recuperarContra';
 import VerificarCodigo from './src/pantallas/verificacion';
-import CrearPropuesta from './src/pantallas/crearPropuesta';
 import Equipo from './src/pantallas/equipos';
 import DetalleEquipo from './src/pantallas/DetalleEquipo';
 import Home from './src/pantallas/Home';
@@ -51,7 +50,6 @@ export default function App() {
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Registro" component={Registro} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
-              <Stack.Screen name="CrearPropuesta" component={CrearPropuesta} />
               <Stack.Screen name="CambiarContra" component={CambiarContra} />
               <Stack.Screen name="RecuperarContra" component={RecuperarContra} />
               <Stack.Screen name="VerificarCodigo" component={VerificarCodigo} />
