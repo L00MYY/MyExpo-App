@@ -13,7 +13,7 @@ CREATE TABLE `administradores` (
   `intentos_fallidos` INT UNSIGNED DEFAULT 0 not null,
   `codigo_recuperacion` INT NULL,
   `bloqueo_hasta` DATETIME NULL,
-  `fecha_registro` DATE DEFAULT (now()),
+  `fecha_registro` DATE DEFAULT (now()), sexo
   `fecha_ultimo_cambio_clave` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id_administrador`),
   UNIQUE KEY `nombre_administrador` (`nombre_administrador`),

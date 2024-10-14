@@ -1,118 +1,131 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import TeamCard from '../components/cards/cardEquipos';
-import TeamDetailsModal from '../components/modals/detalleEquipo';
+import IntegrantesModal from '../components/modals/IntegrantesModal';
+import PropuestasModal from '../components/modals/PropuestasModal';
 import * as Constantes from '../../src/utils/Constantes';
 
-const PropuestasScreen = ({ navigation }) => {
-  const [propuestas, setPropuestas] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState(null);
-  const ip = Constantes.IP;
+const EquiposScreen = ({ navigation }) => {
+    const [equipos, setEquipos] = useState([]);
+    const [integrantesModalVisible, setIntegrantesModalVisible] = useState(false);
+    const [propuestasModalVisible, setPropuestasModalVisible] = useState(false);
+    const [selectedIntegrantes, setSelectedIntegrantes] = useState([]);
+    const [selectedPropuestas, setSelectedPropuestas] = useState([]);
 
-  const obtenerPropuestas = async () => {
-    try {
-      const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`, {
-        method: 'POST',
-        credentials: 'include',
-      });
+    const ip = Constantes.IP;
 
-      if (!response.ok) {
-        throw new Error(`Error HTTP! status: ${response.status}`);
-      }
+    // Función para obtener los equipos asociados al profesor
+    const obtenerEquipos = async () => {
+        try {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readEquiposPorProfeSesion`, {
+                method: 'POST',
+                credentials: 'include',
+            });
 
-      const data = await response.json();
-      console.log("Datos de la respuesta:", data);
+            if (!response.ok) {
+                throw new Error(`Error HTTP! status: ${response.status}`);
+            }
 
-      if (data.status === 1) {
-        setPropuestas(data.dataset || []);
-      } else {
-        console.log("No se pudieron obtener los equipos. Status:", data.status);
-      }
-    } catch (error) {
-      console.error("Error al obtener los equipos:", error);
-    }
-  };
+            const data = await response.json();
 
-  useEffect(() => {
-    obtenerPropuestas();
-  }, []);
+            if (data.status === 1) {
+                setEquipos(data.dataset); // Guarda los equipos obtenidos
+            } else {
+                console.log("No se pudieron obtener los equipos. Status:", data.status);
+                setEquipos([]); // Asegura que la lista esté vacía si no se obtienen datos
+            }
+        } catch (error) {
+            console.error("Error al obtener los equipos:", error);
+            setEquipos([]); // Maneja el error dejando la lista vacía
+        }
+    };
 
-  const openModal = (teamData) => {
-    setSelectedTeam(teamData);
-    setModalVisible(true);
-  };
+    const obtenerIntegrantesPorEquipo = async (equipoId) => {
+        console.log("Obteniendo integrantes para el equipo:", equipoId); // Log
+        try {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readIntegrantesPorEquipo`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `equipoId=${equipoId}`,
+            });
+            const data = await response.json();
+            if (data.status === 1) {
+                setSelectedIntegrantes(data.dataset);
+                setIntegrantesModalVisible(true); // Verifica que se ejecute esta línea
+            }
+        } catch (error) {
+            console.error("Error al obtener los integrantes:", error);
+        }
+    };
 
-  const closeModal = () => {
-    setModalVisible(false);
-    setSelectedTeam(null);
-  };
+    const obtenerPropuestasPorEquipo = async (equipoId) => {
+        try {
+            const response = await fetch(`${ip}/expo24/api/services/serviceProfesores/profesor.php?action=readPropuestasPorEquipo`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `equipoId=${equipoId}`,
+            });
+            const data = await response.json();
+            if (data.status === 1) {
+                setSelectedPropuestas(data.dataset);
+                setPropuestasModalVisible(true); // Verifica que se ejecute esta línea
+            }
+        } catch (error) {
+            console.error("Error al obtener las propuestas:", error);
+        }
+    };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Equipos PTC</Text>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.cardContainer}>
-          {propuestas.length > 0 ? (
-            propuestas.map((propuesta, index) => (
-              <TeamCard
-                key={index}
-                teamData={{
-                  team_name: propuesta.equipo,
-                  coordinator_name: propuesta.coordinador,
-                  members_count: propuesta.numero_integrantes
-                }}
-                onPress={() => openModal({
-                  team_name: propuesta.equipo,
-                  coordinator_name: propuesta.coordinador,
-                  members_count: propuesta.numero_integrantes
-                })}
-              />
-            ))
-          ) : (
-            <Text>No hay equipos disponibles</Text>
-          )}
+    // Funciones para cerrar los modales
+    const closeIntegrantesModal = () => {
+        setIntegrantesModalVisible(false);
+        setSelectedIntegrantes([]);
+    };
+
+    const closePropuestasModal = () => {
+        setPropuestasModalVisible(false);
+        setSelectedPropuestas([]);
+    };
+
+    useEffect(() => {
+        obtenerEquipos(); // Llama a la función para obtener los equipos al cargar el componente
+    }, []);
+
+    return (
+        <View style={styles.container}>
+            <ScrollView>
+                {equipos.length > 0 ? (
+                    equipos.map((equipoItem) => (
+                        <TeamCard
+                            key={equipoItem.id_equipo}
+                            teamData={equipoItem}
+                            onPressIntegrantes={() => obtenerIntegrantesPorEquipo(equipoItem.id_equipo)}
+                            onPressPropuestas={() => obtenerPropuestasPorEquipo(equipoItem.id_equipo)}
+                        />
+                    ))
+                ) : (
+                    <Text>No se encontraron equipos.</Text>
+                )}
+            </ScrollView>
+
+            <IntegrantesModal
+                visible={integrantesModalVisible}
+                onClose={closeIntegrantesModal}
+                integrantes={selectedIntegrantes}
+            />
+            <PropuestasModal
+                visible={propuestasModalVisible}
+                onClose={closePropuestasModal}
+                propuestas={selectedPropuestas}
+            />
         </View>
-      </ScrollView>
-      <TeamDetailsModal
-        visible={modalVisible}
-        onClose={closeModal}
-        teamData={selectedTeam}
-      />
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 16,
-    textAlign: 'center',
-  },
-  scrollView: {
-    flex: 1,
-    marginBottom: 16,
-  },
-  cardContainer: {
-    alignItems: 'center', // Centra las cards en la pantalla
-  },
-  createButton: {
-    backgroundColor: '#00CFFF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 4,
-    alignSelf: 'center',
-  },
-  createButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
+    container: {
+        flex: 1,
+        padding: 20,
+    },
 });
 
-export default PropuestasScreen;
+export default EquiposScreen;

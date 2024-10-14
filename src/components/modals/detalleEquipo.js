@@ -13,9 +13,9 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
         <View style={styles.modalContent}>
           {teamData ? (
             <>
-              <Text style={styles.title}>{`Detalles del Equipo: ${teamData.team_name}`}</Text>
-              <Text>{`Coordinador: ${teamData.coordinator_name}`}</Text>
-              <Text>{`Número de integrantes: ${teamData.members_count}`}</Text>
+              <Text style={styles.title}>{`Detalles del Equipo: ${teamData.equipo}`}</Text>
+              <Text>{`Coordinador: ${teamData.coordinador}`}</Text>
+              <Text>{`Número de integrantes: ${teamData.numero_integrantes}`}</Text>
 
               {/* Mostrar lista de integrantes */}
               {teamData.integrantes && teamData.integrantes.length > 0 ? (
@@ -23,9 +23,9 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
                   <Text style={styles.subtitle}>Integrantes:</Text>
                   <FlatList
                     data={teamData.integrantes}
-                    keyExtractor={(item, index) => index.toString()}
+                    keyExtractor={(item) => item.id_alumno.toString()} // Asegúrate de que este campo sea correcto
                     renderItem={({ item }) => (
-                      <Text style={styles.memberText}>{item.nombre_alumno}</Text>
+                      <Text style={styles.memberText}>{item.nombre_completo}</Text>
                     )}
                   />
                 </>
@@ -36,7 +36,7 @@ const TeamDetailsModal = ({ visible, onClose, teamData }) => {
           ) : (
             <Text>No hay datos disponibles</Text>
           )}
-          <Button title="Cerrar" style={styles.cerrarbtn}onPress={onClose} />
+          <Button title="Cerrar" onPress={onClose} />
         </View>
       </View>
     </Modal>
