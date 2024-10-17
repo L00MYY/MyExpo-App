@@ -42,3 +42,11 @@ npm install react-native-safe-area-context@4.10.1
 npm install react-native-screens@3.31.1
 npm install react-native-awesome-alerts
 npm install react-native-elements
+
+
+
+
+systemProp.http.proxyHost=proxy-host
+systemProp.http.proxyPort=proxy-port
+systemProp.https.proxyHost=proxy-host
+systemProp.https.proxyPort=proxy-port
