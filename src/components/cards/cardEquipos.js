@@ -9,14 +9,17 @@ const TeamCard = ({ teamData, onPressIntegrantes, onPressPropuestas }) => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <Image 
-          source={{ uri: 'https://img.icons8.com/ios/452/task.png' }} 
-          style={styles.icon} 
+        <Image
+          source={{ uri: 'https://img.icons8.com/ios/452/task.png' }}
+          style={styles.icon}
         />
         <Text style={styles.title}>
-          Equipo: {teamData.nombre_equipo_correlativo}, Coordinador: {teamData.nombre_coordinador}
+          Equipo: {teamData.nombre_equipo_correlativo}
         </Text>
-      </View>
+      </View>        
+      <Text style={styles.title}>
+          Coordinador: {teamData.nombre_coordinador}
+      </Text>
       <Text style={styles.subtitle}>Integrantes: {teamData.cantidad_integrantes}</Text>
       <Text style={styles.subtitle}>{teamData.proyecto_seleccionado}</Text>
       <TouchableOpacity style={styles.button} onPress={onPressIntegrantes}>

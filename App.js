@@ -7,12 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Login from './src/pantallas/login';
 import Registro from './src/pantallas/registro';
 import SplashScreen from './src/pantallas/SplashScreen';
-import Propuesta from './src/pantallas/propuestas';
 import CambiarContra from './src/pantallas/cambiarContraseña';
 import RecuperarContra from './src/pantallas/recuperarContra';
 import VerificarCodigo from './src/pantallas/verificacion';
-import Equipo from './src/pantallas/equipos';
-import DetalleEquipo from './src/pantallas/DetalleEquipo';
 import Home from './src/pantallas/Home';
 import TabNavigator from './src/tabNavigator/tabNavigator';
 import NuevaContraseña from './src/pantallas/NuevaContraseña';
@@ -53,7 +50,6 @@ export default function App() {
               <Stack.Screen name="CambiarContra" component={CambiarContra} />
               <Stack.Screen name="RecuperarContra" component={RecuperarContra} />
               <Stack.Screen name="VerificarCodigo" component={VerificarCodigo} />
-              <Stack.Screen name="DetalleEquipo" component={DetalleEquipo} />
               <Stack.Screen name="NuevaContraseña" component={NuevaContraseña} />
             </>
           ) : (
