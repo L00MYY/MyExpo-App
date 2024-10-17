@@ -1,4 +1,3 @@
-// PropuestasModal.js
 import React from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
@@ -9,18 +8,29 @@ const PropuestasModal = ({ visible, onClose, propuestas }) => {
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContainer}>
                     <Text style={styles.modalTitle}>Propuestas del Equipo</Text>
+
+                    {/* Encabezados de la tabla */}
+                    <View style={styles.tableHeader}>
+                        <Text style={styles.headerText}>Nombre Propuesta</Text>
+                        <Text style={styles.headerText}>Descripción</Text>
+                        <Text style={styles.headerText}>Estado</Text>
+                        <Text style={styles.headerText}>Tipo</Text>
+                    </View>
+
+                    {/* Lista de propuestas */}
                     <FlatList
                         data={propuestas}
                         keyExtractor={(item) => item.id_propuesta.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.propuestaItem}>
-                                <Text>{item.nombre_propuesta}</Text>
-                                <Text>{item.descripcion_propuesta}</Text>
-                                <Text>{item.estado_propuesta}</Text>
-                                <Text>{item.tipo_propuesta}</Text>
+                                <Text style={styles.itemText}>{item.nombre_propuesta}</Text>
+                                <Text style={styles.itemText}>{item.descripcion_propuesta}</Text>
+                                <Text style={styles.itemText}>{item.estado_propuesta}</Text>
+                                <Text style={styles.itemText}>{item.tipo_propuesta}</Text>
                             </View>
                         )}
                     />
+
                     <TouchableOpacity style={styles.closeButton} onPress={onClose}>
                         <Text style={styles.closeButtonText}>Cerrar</Text>
                     </TouchableOpacity>
@@ -38,7 +48,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContainer: {
-        width: '80%',
+        width: '90%',
         backgroundColor: 'white',
         borderRadius: 10,
         padding: 20,
@@ -49,8 +59,31 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
     },
-    propuestaItem: {
+    tableHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+        paddingVertical: 10,
         marginBottom: 10,
+    },
+    headerText: {
+        fontWeight: 'bold',
+        flex: 1,
+        textAlign: 'center',
+    },
+    propuestaItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingVertical: 8,
+        borderBottomWidth: 1,
+        borderColor: '#eee',
+    },
+    itemText: {
+        flex: 1,
+        textAlign: 'center',
     },
     closeButton: {
         marginTop: 20,
