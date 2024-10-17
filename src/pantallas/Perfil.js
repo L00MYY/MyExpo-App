@@ -3,9 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { Icon } from 'react-native-elements';
 import { useFocusEffect } from "@react-navigation/native";
@@ -105,84 +103,22 @@ export default function Perfil({ navigation }) {
     }
   };
 
-
-  const handleTextChange = (text) => {
-    let formatted = text.replace(/[^\d]/g, ""); // Elimina todos los caracteres no numéricos.
-    if (formatted.length > 8) {
-      formatted = formatted.slice(0, 8); // Limita a 8 dígitos.
-    }
-    if (formatted.length > 4) {
-      formatted = formatted.slice(0, 4) + "-" + formatted.slice(4); // Formatea como XXXX-XXXX.
-    }
-    setProfileData((prevData) => ({
-      ...prevData,
-      contacto_cliente: formatted,
-    })); // Actualiza el estado con el valor formateado.
-  };
-
-  const irCambiarContraseña = () => {
-    navigation.navigate("Contrasenia");
-  };
-
-  // Funcion para cambiar los datos
-  const editProfile = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("nombreProfesor", profileData.nombre_profesor);
-      formData.append("carnetProfesor", profileData.carnet_profesor);
-      formData.append("correoProfesor", profileData.correo_profesor);
-
-      const response = await fetch(
-        `${ip}/expo24/api/services/serviceProfesores/profesor.php?action=editProfile`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      if (data.status) {
-        showAlert("Éxito", data.message, "success");
-      } else {
-        showAlert("Error", data.error, "error");
-      }
-    } catch (error) {
-      console.error("Error :", error);
-      showAlert("Error", "Error al editar", "error");
-    }
-  };
-
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre del profesor"
-        value={profileData.nombre_profesor}
-        onChangeText={(text) =>
-          setProfileData((prevData) => ({ ...prevData, nombre_profesor: text }))
-        }
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Carnet"
-        value={profileData.carnet_profesor}
-        onChangeText={(text) =>
-          setProfileData((prevData) => ({ ...prevData, carnet_profesor: text }))
-        }
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Correo electrónico"
-        value={profileData.correo_profesor}
-        onChangeText={(text) =>
-          setProfileData((prevData) => ({ ...prevData, correo_profesor: text }))
-        }
-      />
-        <TouchableOpacity onPress={handleLogout}>
-          <Icon name="logout" type="material" color="#000" />
-        </TouchableOpacity>
-      <TouchableOpacity onPress={editProfile} style={styles.button}>
-        <Text style={styles.buttonText}>GUARDAR PERFIL</Text>
+      <Text style={styles.label}>Tu nombre:</Text>
+      <Text style={styles.data}>{profileData.nombre_profesor}</Text>
+
+      <Text style={styles.label}>Código:</Text>
+      <Text style={styles.data}>{profileData.carnet_profesor}</Text>
+
+      <Text style={styles.label}>Correo electrónico:</Text>
+      <Text style={styles.data}>{profileData.correo_profesor}</Text>
+
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Icon name="logout" type="material" color="#fff" />
+        <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
       </TouchableOpacity>
+
       <AwesomeAlert
         show={alertVisible}
         showProgress={false}
@@ -212,42 +148,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
   },
-  title: {
-    fontSize: 30,
-    marginBottom: 24,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontStyle: "italic",
-  },
-  input: {
-    backgroundColor: "white", // Fondo gris claro similar al botón
-    width: "100%",
-    height: 50,
-    borderColor: "#000",
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingLeft: 10,
+  label: {
     fontSize: 16,
-    borderRadius: 8, // Bordes redondeados para el input
+    fontWeight: "bold",
+    marginVertical: 8,
   },
-  button: {
-    backgroundColor: "#000", // Fondo negro similar al input
-    paddingVertical: 12,
+  data: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  logoutButton: {
+    flexDirection: "row",
     alignItems: "center",
-    marginTop: 12,
-    borderRadius: 8, // Bordes redondeados para el botón
-  },
-  button2: {
-    backgroundColor: "#FEAF00", // Fondo negro similar al input
+    backgroundColor: "#000",
     paddingVertical: 12,
-    alignItems: "center",
-    marginTop: 12,
-    borderRadius: 8, // Bordes redondeados para el botón
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 20,
   },
-  buttonText: {
+  logoutButtonText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "bold",
+    marginLeft: 8,
   },
   headerTitleContainer: {
     alignItems: "center",
@@ -255,20 +177,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  headerRightContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 100,
-  },
-  logoutText: {
-    fontSize: 16,
-    marginRight: 8,
-  },
-  logoutIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 16,
   },
   alertContentContainer: {
     borderRadius: 10,
