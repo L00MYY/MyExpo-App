@@ -50,3 +50,10 @@ systemProp.http.proxyHost=proxy-host
 systemProp.http.proxyPort=proxy-port
 systemProp.https.proxyHost=proxy-host
 systemProp.https.proxyPort=proxy-port
+
+
+
+systemProp.http.proxyHost=
+systemProp.http.proxyPort=
+systemProp.https.proxyHost=
+systemProp.https.proxyPort=
