@@ -10,7 +10,6 @@ import SplashScreen from './src/pantallas/SplashScreen';
 import CambiarContra from './src/pantallas/cambiarContraseña';
 import RecuperarContra from './src/pantallas/recuperarContra';
 import VerificarCodigo from './src/pantallas/verificacion';
-import Home from './src/pantallas/Home';
 import TabNavigator from './src/tabNavigator/tabNavigator';
 import NuevaContraseña from './src/pantallas/NuevaContraseña';
 
